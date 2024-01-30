@@ -1,0 +1,32 @@
+index_title=Paldmin
+index_subtitle=Palworld Server Admin Interface v $1 
+index_econfig=The Paldmin config file $1 was not found on your system. Maybe Paldmin is not installed, or your <a href='$2'>module configuration</a> is incorrect.
+index_epalworld=The PalServer program $1 was not found on your system. <br/><br/>Maybe PalServer is not installed, your <a href='$2'>module configuration</a> is incorrect, or the file has the wrong chmod flags.
+index_eservice=The PalServer daemon $1 was not found on your system or systemctl not found. <br/><br/>Maybe the daemon service is not registered or your <a href='$2'>module configuration</a> is incorrect.
+
+index_wsave_dir=Could not find savegame directory $1 .<br/>Please start the server once manually to create a default save. 
+index_wsave_conf=Could not find savegame config $1 .<br/>Please start the server once manually to create a default save and config.
+
+index_basic=Basic Info
+basic_state_title=Palworld Server State
+basic_upsince_title=Online Since
+basic_upsince_not_started=Not started yet
+
+index_glop=Global Options
+glop_config=Edit Server Config
+
+
+index_start=Start Palworld Server
+index_startmsg=Click this button to start the PalServer.
+index_stop=Stop Palworld Server
+index_stopmsg=Click this button to stop the PalServer.
+index_restart=Restart Palworld Server
+index_restartmsg=Click this button to apply changes and restart the PalServer.
+
+missing_cmd=Daemon Service not defined in <a href='$1'>module configuration</a>.
+start_err=Failed to start PalServer
+stop_err=Failed to stop PalServer
+restart_err=Failed to restart PalServer
+
+online=Online
+offline=Offline

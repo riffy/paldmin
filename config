@@ -1,0 +1,4 @@
+palserver=/home/steam/.local/share/Steam/steamapps/common/PalServer
+paldmin_config=/etc/paldmin.conf
+pid_file=/var/run/paldmin.pid
+systemctl=palworld.service
