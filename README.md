@@ -41,11 +41,11 @@ You should now see `Palworld Admin` under the `Servers` category.
 
 # Usage
 
-(TBD)
+This module is heavily based on the tutorial provided by **A1RM4X** and assumes that a daemon `palworld.service` exists, but the [Module Configuration](#moduleconfig) allows to control or fine tune the environment.
 
-## Module Configuration
+## <a name="moduleconfig"></a>Module Configuration
 
-(TBD)
+
 
 # FAQs
 
