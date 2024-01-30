@@ -9,6 +9,7 @@ no warnings 'uninitialized';
 require './paldmin-lib.pl';
 
 our (%text);
+ReadParse();
 error_setup($text{'restart_err'});
 my $err = restart_server();
 error("<tt>".html_escape($err)."</tt>") if ($err);
