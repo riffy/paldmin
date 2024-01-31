@@ -16,11 +16,18 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Package Source Code
+      - name: Copy Source Files
         run: |
-          mkdir paldmin
-          cp -r !(paldmin) paldmin
-          tar -czvf "release-${{ github.event.inputs.release_version }}.tar.gz" -C paldmin .
+          # Using rSync
+          rsync -Rr ./ ./paldmin/
+  
+      - name: Remove Unwanted Directories
+        run: |
+          rm -rf ./paldmin/docs
+  
+      - name: Create Artifact
+        run: |
+          tar -zcvf "release-${{ github.event.inputs.release_version }}.tar.gz" ./paldmin
 
       - name: Upload Release Artifact
         uses: actions/upload-artifact@v4
