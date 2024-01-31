@@ -29,7 +29,7 @@ This module was developed using Debian 12 (bookworm). Please note that other OS 
 2. Install [Webmin](https://www.howtoforge.com/how-to-install-webmin-on-debian-12/)
 3. Follow **strictly** [this](https://github.com/A1RM4X/HowTo-Palworld/tree/main) tutorial to install Palworld Server on Linux
 4. Install the Module
-	- Go to [releases](https://github.com/riffy/paldmin/releases) and copy the release link (`release.tar.gz`)
+	- Go to [releases](https://github.com/riffy/paldmin/releases) and copy the release link (`paldmin-$VERSION.tar.gz`)
 	- Go to your webmin: `Webmin -> Webmin Configuration -> Webmin Modules -> Install` and choose `From HTTP or FTP URL`
 	- Paste the link and click `Install Module`
 
