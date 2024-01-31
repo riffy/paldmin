@@ -19,7 +19,7 @@ jobs:
       - name: Package Source Code
         run: |
           # Exclude certain directories from packaging
-          tar --exclude=docs -czvf "release-${{ github.event.inputs.release_version }}.tar.gz" .
+          tar --exclude-vcs --exclude='./.*' --exclude=docs -czvf "release-${{ github.event.inputs.release_version }}.tar.gz" .
 
       - name: Upload Release Artifact
         uses: actions/upload-artifact@v4
