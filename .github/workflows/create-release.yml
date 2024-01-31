@@ -23,7 +23,7 @@ jobs:
   
       - name: Remove Unwanted Directories
         run: |
-          rm -rf ./paldmin/docs
+          rm -rf ./paldmin/docs && rm -rf ./paldmin/.git && rm -rf ./paldmin/.github
   
       - name: Create Artifact
         run: |
