@@ -6,13 +6,13 @@ This module is still big **Work In Progress**.
 ### Current Features
 * Starting, Stopping, Restarting Server via daemon
 * Basic Info
+* Edit PalWorldSettings.ini (or any other .ini file)
 
 ![Screenshot of Paldmin](./docs/images/readme_01.PNG)
 
 ### Upcoming Features
-* Set Backup Plan
 * Set Schedule Restart
-* Edit PalWorldSettings.ini (or any other .ini file)
+* Set Backup Plan
 * Connect RCON / Base Commands
 	* Broadcast
 	* Playerlist
