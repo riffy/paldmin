@@ -15,6 +15,7 @@ basic_upsince_not_started=Not started yet
 index_glop=Global Options
 glop_ws=World Settings
 glop_reset_world=Reset World Settings
+glop_config=Config Files
 
 
 index_start=Start Palworld Server
@@ -42,6 +43,11 @@ glop_ws_esave_title=Error while saving config
 glop_ws_esave_del=Failed deleting old config file. <br/> $1
 glop_ws_esave_open=Failed creating/opening new config file. <br/> $1
 glop_ws_reset_succ=World Settings $1 successfully reset to default. <br/>
+
+glop_config_txt=Files from $1
+glop_config_file=Edit Config File
+glop_config_efile=Invalid configuration file!
+glop_config_err=Failed to save configuration file
 
 online=Online
 offline=Offline

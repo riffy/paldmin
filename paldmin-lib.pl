@@ -329,7 +329,24 @@ sub settings_file_read() {
 	return %rv;
 }
 
-# Utility
+=head1 Utility
+
+Simple Utility functions
+
+=cut
+
+=head1 get_files_in_dir(dir)
+
+=cut
+
+sub get_files_in_dir() {
+	my $dir = @_[0];
+	opendir(DIR, $_[0]);
+	local @rv = grep { $_ ne "." && $_ ne ".." } readdir(DIR);
+	closedir(DIR);
+	return @rv;
+}
+
 
 =head2 display_box(type, title, content)
 

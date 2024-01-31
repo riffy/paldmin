@@ -39,12 +39,15 @@ print ui_hr();
 
 # Icon Table
 print ui_subheading($text{'index_glop'});
-my @links = ( 'edit_ws.cgi' );
-my @titles = ( $text{'glop_ws'} );
-my @images = ( 'images/procs.gif' );
-@images = map { $_ = get_webprefix()."/paldmin/$_" } @images;
+
+my @links = ( 'edit_ws.cgi', 'edit_config.cgi' );
+my @titles = ( $text{'glop_ws'}, $text{'glop_config'} );
+my @images = ( 'images/glop_ws.png', 'images/glop_config.png' );
+
 icons_table(\@links, \@titles, \@images, 5);
+
 print ui_hr();
+
 # Footer
 print ui_buttons_start();
 if ($running > 0) {
