@@ -10,7 +10,6 @@ my $module_version = $module_info{'version'};
 
 ui_print_header(text('index_subtitle', $module_version), $text{'index_title'}, "", "intro", 1, 1);
 
-
 # Validate the base config of the module
 my ($ety, $eti, $ec) = validate_config();
 if (defined $ety) {
@@ -36,38 +35,24 @@ if ($running) {
 	print ui_table_row($text{'basic_upsince_title'}, up_since());
 }
 print ui_table_end();
-print &ui_hr();
+print ui_hr();
 
+# Icon Table
+print ui_subheading($text{'index_glop'});
+my @links = ( 'edit_ws.cgi' );
+my @titles = ( $text{'glop_ws'} );
+my @images = ( 'images/procs.gif' );
+@images = map { $_ = get_webprefix()."/paldmin/$_" } @images;
+icons_table(\@links, \@titles, \@images, 5);
+print ui_hr();
 # Footer
-print &ui_buttons_start();
-
-
+print ui_buttons_start();
 if ($running > 0) {
-	print &ui_buttons_row("restart.cgi", $text{'index_restart'}, $text{'index_restartmsg'});
-	print &ui_buttons_row("stop.cgi", $text{'index_stop'}, $text{'index_stopmsg'});
+	print ui_buttons_row("restart.cgi", $text{'index_restart'}, $text{'index_restartmsg'});
+	print ui_buttons_row("stop.cgi", $text{'index_stop'}, $text{'index_stopmsg'});
 } else {
-	print &ui_buttons_row("start.cgi", $text{'index_start'}, $text{'index_startmsg'});
+	print ui_buttons_row("start.cgi", $text{'index_start'}, $text{'index_startmsg'});
 }
-print &ui_buttons_end();
-
-# Utility
-
-=head2 display_box(type, title, content)
-
-Displays a generic box based on the type title and content provided.
-type: error | warning  -> Else success
-
-=cut
-
-sub display_box() {
-	my $alert_box_type = (@_[0] eq 'error') ? 'danger' : ((@_[0] eq 'warning') ? 'warn' : 'success');
-	print ui_alert_box('', $alert_box_type);
-	print ui_details({
-		'title' => @_[1],
-		'content' => @_[2],
-		'class' => @_[0],
-		'html' => 1},
-		1);
-}
+print ui_buttons_end();
 
 1;

@@ -3,13 +3,13 @@ A [Webmin](https://webmin.com/) module for easy configure and control of a Palwo
 
 This module is still big **Work In Progress**.
 
-## Current Features
+### Current Features
 * Starting, Stopping, Restarting Server via daemon
 * Basic Info
 
 ![Screenshot of Paldmin](./docs/images/readme_01.PNG)
 
-## Upcoming Features
+### Upcoming Features
 * Set Backup Plan
 * Set Schedule Restart
 * Edit PalWorldSettings.ini (or any other .ini file)
@@ -21,7 +21,7 @@ This module is still big **Work In Progress**.
 * RCON Specific commands
 * Import & Convert savegames
 
-# Installation
+## Installation
 
 This module was developed using Debian 12 (bookworm). Please note that other OS may not work as expected (open an issue).
 
@@ -39,11 +39,11 @@ You should now see `Palworld Admin` under the `Servers` category.
 
 **Note**: If you installed a firewall, add the Palworld Server Port to the allowed list
 
-# Usage
+## Usage
 
 This module is heavily based on the tutorial provided by **A1RM4X** and assumes that a daemon `palworld.service` exists, but the [Module Configuration](#moduleconfig) allows to control or fine tune the environment.
 
-## <a name="moduleconfig"></a>Module Configuration
+### <a name="moduleconfig"></a>Module Configuration
 
 The module configuration can be accessed by clicking the gear ⚙ in the top left corner on the Paldmin Module page.
 If you chose a different installation path or your environment changes, you can make edits here.
@@ -54,10 +54,10 @@ If you chose a different installation path or your environment changes, you can 
 | Paldmin config file | Webmin Config file for later use | /etc/paldmin.conf |
 | Daemon Service | The daemon service which is controlled by the module via `start`, `stop`, `restart` | palworld.service |
 
-# FAQs
+## FAQs
 
 (TBD)
 
-# Thanks
+## Thanks
 
 * [A1RM4X](https://github.com/A1RM4X) - For the initial tutorial of the linux palword server

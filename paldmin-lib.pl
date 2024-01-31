@@ -131,7 +131,11 @@ sub get_savedir_validation() {
 
 Checks if palserver contains a config file (PalworldSettings.ini)
 in the config dir inside the save directory.
-Returns either the path to the ini file or undef
+Returns:
+	@[
+		>0 if error, 0 on success
+		checked config path
+	]
 
 =cut
 
@@ -235,6 +239,118 @@ sub restart_server {
 		$out = start_server();
 	}
 	return $? ? $out : undef;
+}
+
+=head1 Palworld Config 
+
+Basic stuff to configure the palworld server
+
+=cut
+
+=head2 get_world_settings()
+
+Retrieves the default world settings and the save world settings.
+Combines them by replacing the default world settings with save world settings if applicable.
+Returns undefined on error (if either setting doesn't exist).
+
+=cut
+
+sub get_world_settings() {
+	my %def = get_default_world_settings();
+	if (!%def) {
+		return undef;
+	}
+	my %save = get_save_world_settings();
+	if (!%save) {
+		return %def;
+	}
+	foreach my $savek (keys %save) {
+		$def{$savek} = $save{$savek};
+	}
+	return %def;
+}
+
+=head2 get_default_world_settings()
+
+Returns the default world settings from the ini file.
+
+=cut
+
+sub get_default_world_settings() {
+	return settings_file_read("$config{'palserver'}/DefaultPalWorldSettings.ini");
+}
+
+=head2 get_save_world_settings()
+
+Returns the world settings from the ini file.
+
+=cut
+
+sub get_save_world_settings() {
+	my ($e, $ini) = get_saveconfig_validation();
+	if ($e > 0) {
+		return undef;
+	}
+	return settings_file_read($ini);
+}
+
+=head2 settings_file_read(file)
+
+Reads a given settings file.
+Returns undefined on error, else returns the settings as a 2D Array.
+
+Returns:
+	[
+		[Key, Value]
+	]
+
+=cut
+
+sub settings_file_read() {
+	my $ini = @_[0];
+	if (!-r $ini) {
+		return undef;
+	}
+	my %rv;
+	open_readfile(INI, $ini) || return undef;	
+	while(<INI>) {
+		my $option_settings_line = $_;
+		if ($option_settings_line =~ /OptionSettings=\((.*?)\)/) {
+			my $options_str = $1;
+			my @pairs = split /,/, $options_str;
+
+			foreach my $pair (@pairs) {
+				my ($key, $value) = split /=/, $pair;
+				$rv{$key} = $value;
+			}
+		} 
+	}
+	close(INI);
+	return %rv;
+}
+
+# Utility
+
+=head2 display_box(type, title, content)
+
+Displays a generic box based on the type title and content provided.
+type: danger | warning | info  -> Else success
+
+=cut
+
+sub display_box() {
+	my $alert_box_type = 'success';
+	if (@_[0] eq 'danger') { $alert_box_type = 'error' }
+	elsif (@_[0] eq 'warning') { $alert_box_type = 'warn' }
+	elsif (@_[0] eq 'info') { $alert_box_type = 'info' }
+
+	print ui_alert_box('', $alert_box_type);
+	print ui_details({
+		'title' => @_[1],
+		'content' => @_[2],
+		'class' => @_[0],
+		'html' => 1},
+		1);
 }
 
 1;

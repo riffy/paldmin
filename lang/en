@@ -13,7 +13,8 @@ basic_upsince_title=Online Since
 basic_upsince_not_started=Not started yet
 
 index_glop=Global Options
-glop_config=Edit Server Config
+glop_ws=World Settings
+glop_reset_world=Reset World Settings
 
 
 index_start=Start Palworld Server
@@ -22,11 +23,26 @@ index_stop=Stop Palworld Server
 index_stopmsg=Click this button to stop the PalServer.
 index_restart=Restart Palworld Server
 index_restartmsg=Click this button to apply changes and restart the PalServer.
+index_return=Overview
 
 missing_cmd=Daemon Service not defined in <a href='$1'>module configuration</a>.
 start_err=Failed to start PalServer
 stop_err=Failed to stop PalServer
 restart_err=Failed to restart PalServer
 
+glop_ws_e=World Settings Error
+glop_ws_eread=Could not read existing world settings
+glop_ws_header=World Settings
+glop_ws_info=Beware of Syntax!
+glop_ws_info_desc=Stick to the following syntax rules: <ul><li>NEVER use commas (,) ANYWHERE.</li><li>Always use point (.) for decimals.</li><li>Use double quotes "" when they are already present.</li></ul><br>
+glop_ws_info_restart=<strong>Changes are only applied AFTER a restart</bold>
+glop_ws_reset_desc=You can reset the world settings back to default.
+
+glop_ws_esave_title=Error while saving config
+glop_ws_esave_del=Failed deleting old config file. <br/> $1
+glop_ws_esave_open=Failed creating/opening new config file. <br/> $1
+glop_ws_reset_succ=World Settings $1 successfully reset to default. <br/>
+
 online=Online
 offline=Offline
+reset_to_default=Reset to default

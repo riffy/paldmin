@@ -1,14 +1,8 @@
 #!/usr/bin/perl
 # Restart the Palword Server
 
-use strict;
-use warnings;
-no warnings 'redefine';
-no warnings 'uninitialized';
-
 require './paldmin-lib.pl';
 
-our (%text);
 ReadParse();
 error_setup($text{'restart_err'});
 my $err = restart_server();
