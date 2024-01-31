@@ -57,6 +57,9 @@ If you chose a different installation path or your environment changes, you can 
 ### World Settings
 
 The World Settings page reads the `$SERVER_DIR/Config/LinuxServer/PalWorldSettings.ini` file and displays it in a manner for easier configuration.
+It starts by reading the `DefaultPalWorldSettings.ini` and replacing all existing values with values from the `PalWorldSettings.ini`, if there are any.
+
+If you want to add a new field to settings, just update the `DefaultPalWorldSettings.ini` in the server directory manually.
 
 Please note the following information about syntax when editing the World Settings:
 * NEVER use commas (,) or equalsigns (=) ANYWHERE. (no, not even in the server name)
