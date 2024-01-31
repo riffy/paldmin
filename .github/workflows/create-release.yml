@@ -14,7 +14,7 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Package Source Code
         run: |
@@ -22,7 +22,7 @@ jobs:
           tar --exclude=docs -czvf "release-${{ github.event.inputs.release_version }}.tar.gz" .
 
       - name: Upload Release Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: release-artifact
           path: release-${{ github.event.inputs.release_version }}.tar.gz
