@@ -54,6 +54,15 @@ If you chose a different installation path or your environment changes, you can 
 | Paldmin config file | Webmin Config file for later use | /etc/paldmin.conf |
 | Daemon Service | The daemon service which is controlled by the module via `start`, `stop`, `restart` | palworld.service |
 
+### World Settings
+
+The World Settings page reads the `$SERVER_DIR/Config/LinuxServer/PalWorldSettings.ini` file and displays it in a manner for easier configuration.
+
+Please note the following information about syntax when editing the World Settings:
+* NEVER use commas (,) ANYWHERE.
+* Always use point (.) for decimals.
+* Use double quotes "" when they are already present (e.g. for text inputs).
+
 ## FAQs
 
 (TBD)
