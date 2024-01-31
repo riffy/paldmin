@@ -2,14 +2,8 @@
 # start.cgi
 # Start the PalServer daemon
 
-use strict;
-use warnings;
-no warnings 'redefine';
-no warnings 'uninitialized';
-
 require './paldmin-lib.pl';
 
-our (%text);
 ReadParse();
 error_setup($text{'start_err'});
 my $err = start_server();
