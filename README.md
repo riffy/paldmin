@@ -59,7 +59,7 @@ If you chose a different installation path or your environment changes, you can 
 The World Settings page reads the `$SERVER_DIR/Config/LinuxServer/PalWorldSettings.ini` file and displays it in a manner for easier configuration.
 
 Please note the following information about syntax when editing the World Settings:
-* NEVER use commas (,) ANYWHERE.
+* NEVER use commas (,) or equalsigns (=) ANYWHERE. (no, not even in the server name)
 * Always use point (.) for decimals.
 * Use double quotes "" when they are already present (e.g. for text inputs).
 
