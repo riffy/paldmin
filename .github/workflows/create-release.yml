@@ -1,0 +1,28 @@
+name: Manual Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_version:
+        description: 'Release version'
+        required: true
+        default: 'v1.0.0'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Package Source Code
+        run: |
+          # Exclude certain directories from packaging
+          tar --exclude=docs -czvf "release-${{ github.event.inputs.release_version }}.tar.gz" .
+
+      - name: Upload Release Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: release-artifact
+          path: release-${{ github.event.inputs.release_version }}.tar.gz
