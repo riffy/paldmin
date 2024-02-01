@@ -1,12 +1,12 @@
 # Usage
 
 > [!NOTE]
-> Some features or functionality are only accessible if the server is running AND [rcon](./install.md#rcon-installation) is installed and correctly configured.
+> Some features or functionality are only accessible if the server is running AND [RCON](./install.md#rcon) is installed and correctly configured.
 
 ## Broadcast Message
 
 > [!NOTE]
-> Requires install and configured [rcon](./install.md#rcon-installation)
+> * [RCON](./install.md#rcon) required
 
 Sends a broadcast message to the server in the chat. Whitespaces are automatically replaced with underscores (\_).
 
@@ -30,8 +30,7 @@ The Config Files page allows for editing of all files that are placed inside `$S
 
 ## Active Player List
 > [!NOTE]
-> * [rcon](./install.md#rcon-installation) required
-> * Server must be running
+> * [RCON](./install.md#rcon) required
 
 Displays all active players on the server with their:
 * PlayerName

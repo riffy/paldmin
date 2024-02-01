@@ -12,10 +12,15 @@ This module is still big **Work In Progress**.
 ![Screenshot of Paldmin](./docs/images/readme_01.PNG)
 
 ### Upcoming Features
-* Set Schedule Restart
+* Restart Scheduler
+	* By time
+	* By RAM Usage ?
 * Set Backup Plan
 * Custom RCON command
-* Import & Convert savegames
+* Savegame Editor
+	* Download Players
+	* Download World
+	* Upload ?
 
 ## Installation
 
