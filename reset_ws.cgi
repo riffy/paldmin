@@ -38,7 +38,7 @@ if (!%def || !keys %def) {
 	close_tempfile(CONF);
 
 	webmin_log("reset_ws");
-	display_box('success', $text{'glop_ws_header'}, text('glop_ws_reset_succ', $ini).$text{'glop_ws_info_restart'});
+	display_box('success', $text{'glop_ws_header'}, text('glop_ws_reset_succ', $ini).$text{'change_restart_required'});
 }
 
 ui_print_footer("", $text{'index_return'});

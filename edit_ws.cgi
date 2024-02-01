@@ -9,7 +9,7 @@ my $module_info = get_module_info($module_name);
 my $module_version = $module_info{'version'};
 
 ui_print_header($text{'glop_ws'}, $text{'index_title'}, "", "intro", 1, 1);
-display_box('info', $text{'glop_ws_info'}, $text{'glop_ws_info_desc'}.$text{'glop_ws_info_restart'});
+display_box('info', $text{'glop_ws_info'}, $text{'glop_ws_info_desc'}.$text{'change_restart_required'});
 
 # Validate palserver directory and savegame
 my %world_settings = get_world_settings();
