@@ -27,7 +27,9 @@ if (defined $wty) {
 	exit;
 }
 
-my $running = is_server_running();
+# TODO: Improve this by calling init:: in lib ?
+my %service = get_service_status();
+my $running = $service{'state'} eq 'active';
 
 my $rcon_validation = validate_rcon();
 my $rcon_valid = (!defined $rcon_validation);
@@ -50,11 +52,12 @@ elsif ($running) {
 
 # Basic Info
 print ui_table_start($text{'index_basic'}, undef, 2);
-print ui_table_row($text{'basic_state_title'}, "Service ".get_server_state());
+print ui_table_row($text{'basic_state_title'}, $service{'state'});
 if ($running) {
-	print ui_table_row($text{'basic_upsince_title'}, up_since());
+	print ui_table_row($text{'basic_upsince_title'}, (!defined $service{'upsince'}) ? "?" : $service{'upsince'});
+	print ui_table_row($text{'basic_ram_usage'}, (!defined $service{'memory'}) ? "?" : $service{'memory'});
+	# |
 	print ui_table_row($text{'basic_rcon_title'}, $rcon_ok ? $text{'ok'} : $text{'nok'});
-
 	my $activePlayers = ($rcon_ok) ? scalar(get_active_players()) : "?";
 	my $slots = get_setting("ServerPlayerMaxNum");
 	print ui_table_row($text{'basic_players'}, "".$activePlayers."/".$slots);
@@ -100,6 +103,18 @@ if ($running > 0) {
 } else {
 	print ui_buttons_row("start.cgi", $text{'index_start'}, $text{'index_startmsg'});
 }
+
+# TODO: Use foreign_require("init") to safely check for start at boot
+#foreign_require("init");
+#my $st = &init::action_status( $config{'systemctl'}); <- State goes here
+
+print ui_buttons_row(
+	"atboot.cgi",
+	$text{'index_atboot'},
+	$text{'index_atbootdesc'},
+	undef,
+	ui_radio("boot", $service{'atboot'} eq 'enabled' ? 1 : 0,
+			[ [ 1, $text{'yes'} ], [ 0, $text{'no'} ] ]));
 print ui_buttons_end();
 
 1;
