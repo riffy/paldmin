@@ -118,7 +118,8 @@ sub validate_savegame() {
 
 =head2 get_savedir_validation()
 
-Checks if palserver contains a save directory. Returns either the save directory or undef
+Checks if palserver contains a save directory. 
+Returns either the save directory or undef
 
 =cut
 
@@ -145,11 +146,111 @@ sub get_saveconfig_validation() {
 	return ((!-r $conf_world_settings), $conf_world_settings);
 }
 
+=head2 validate_rcon()
+
+Checks if rcon is valid, enabled, etc.
+
+=cut
+sub validate_rcon() {
+	# Check if RCON is in module config
+	my $rcon_dir = $config{'rcon_dir'};
+	if (!defined $rcon_dir || $rcon_dir eq "") {
+		return text('index_wrcon_conf', "@{[&get_webprefix()]}/config.cgi?$module_name");
+	}
+	elsif (!-d $rcon_dir) {
+		return text('index_wrcon_dir', $rcon_dir, "@{[&get_webprefix()]}/config.cgi?$module_name");
+	}
+	else {
+		my ($res, $rc) = get_rcon_exec_validation();
+		if ($res > 0) {
+			return text('index_wrcon_missing_exec', $rc, "@{[&get_webprefix()]}/config.cgi?$module_name");
+		}
+		elsif (!is_rcon_enabled()) {
+			return text('index_wrcon_disabled');
+		}
+		elsif (!is_rcon_password_valid()) {
+			return text('index_wrcon_pwd');
+		}
+		return undef;
+	}
+}
+
+=head2 get_rcon_exec_validation()
+
+Checks if rcon executable is at configured path.
+Returns:
+	@[
+		>0 if error, 0 on success
+		checked path
+	]
+
+=cut
+
+sub get_rcon_exec_validation() {
+	my $rc = "$config{'rcon_dir'}/rcon";
+	return ((!-x $rc), $rc);
+}
+
+=head2 is_rcon_enabled()
+
+Checks the current world settings and returns 1 if rcon is enabled, else 0
+
+=cut
+
+sub is_rcon_enabled() {
+	my %settings = get_world_settings();
+	return 1 if ($settings{'RCONEnabled'} eq "True");
+	return 0;
+}
+
+=head2 get_rcon_password()
+
+Returns the rcon password in between the "" from settings or undefined
+
+=cut
+
+sub get_rcon_password() {
+	my %settings = get_world_settings();
+	if ($settings{'AdminPassword'} =~ /"([^"]*)"/) {
+		my $pwd = $1;
+		return undef if (length($pwd) <= 0);
+		return $1;
+	} else {
+		return undef;
+	}
+}
+
+=head2 is_rcon_password_valid()
+
+Checks if the current admin password from world settings is valid.
+Return 0 on error, 1 on succes
+
+=cut
+
+sub is_rcon_password_valid() {
+	my $pwd = get_rcon_password();
+	return 0 if (!defined $pwd);
+	return 1;
+}
+
+
 =head1 Service Info
 
 Basic Service Info about status etc
 
 =cut
+
+
+=head2 get_service_state
+
+Returns the service state or undef if no systemctl registered
+
+=cut
+
+sub get_server_state {
+    my $systemctlcmd = has_command("systemctl");
+    return defined $systemctlcmd ? backquote_command("$systemctlcmd is-active $config{'systemctl'}") =~ s/\n//r : undef;
+}
 
 =head2 is_server_running()
 
@@ -158,12 +259,7 @@ Returns 1 if systemctl is running, else 0
 =cut
 
 sub is_server_running() {
-	my $systemctlcmd = has_command("systemctl");
-	if (!defined $systemctlcmd) {
-		return 0;
-	}
-	my $out = backquote_command("systemctl is-active $config{'systemctl'}");
-	return index($out, "inactive") != -1 ? 0 : 1;
+	return (get_server_state() eq "active") ? 1 : 0;
 }
 
 =head2 up_since()
@@ -247,6 +343,19 @@ Basic stuff to configure the palworld server
 
 =cut
 
+=head2 get_setting(settings)
+
+Returns the configured setting for a field.
+Returns undef on error
+
+=cut
+
+sub get_setting {
+	my ($setting) = @_;
+	my %settings = get_world_settings();
+	return $settings{$setting};
+}
+
 =head2 get_world_settings()
 
 Retrieves the default world settings and the save world settings.
@@ -306,8 +415,8 @@ Returns:
 
 =cut
 
-sub settings_file_read() {
-	my $ini = @_[0];
+sub settings_file_read {
+	my ($ini) = @_;
 	if (!-r $ini) {
 		return undef;
 	}
@@ -329,6 +438,95 @@ sub settings_file_read() {
 	return %rv;
 }
 
+=head2 get_banned_steamids()
+
+Tries to read the banlist.txt.
+If the file doesn't exist, returns an empty array;
+
+=cut
+
+sub get_banned_steamids() {
+	my @rv;
+	my ($esd, $sd) = get_savedir_validation();
+	my $file = $sd."/SaveGames/banlist.txt";
+	open_readfile(BANS, $file) || return @rv;
+	while(<BANS>) {
+		chomp;
+		if (/steam_(\d+)/) {
+            push @rv, $1;
+        }
+	}
+	close(BANS);
+	return @rv;
+}
+
+=head2 add_steamid_to_banlist(steamid)
+
+Takes a steamid with the prefix "steamid_XXXX".
+Checks if the banlist.txt exists, if not creates it.
+
+Returns:
+	a string with error
+	undef on success
+
+=cut
+
+sub add_steamid_to_banlist {
+	my ($sId) = @_;
+	my ($e, $sd) = get_savedir_validation();
+	if ($e > 0) {
+		return text('banlist_eadd_missdir', $sd);
+	}
+	my $file = $sd."/SaveGames/banlist.txt";
+	lock_file($file);
+	my $lref = read_file_lines($file);
+	push(@$lref, $sId);
+	flush_file_lines($file);
+	unlock_file($file);
+	return undef;
+}
+
+=head2 remove_steamids_from_banlist(@steamids)
+
+Takes an array of steamids with the prefix "steam_" 
+and removes them from the banlist.txt
+
+=cut
+
+sub remove_steamids_from_banlist {
+	my ($ids) = @_;
+	my ($e, $sd) = get_savedir_validation();
+	if ($e > 0) {
+		return text('banlist_eadd_missdir', $sd);
+	}
+	my $file = $sd."/SaveGames/banlist.txt";
+	my @splices = ();
+	
+	lock_file($file);
+	my $lref = read_file_lines($file);
+
+	# Find all line indexes with matching id
+    for my $id (@$ids) {
+        for my $i (0 .. $#$lref) {
+			my $line = @$lref[$i];
+            if (index($id, $line) >= 0) {
+                push @splices, $i;
+                last;  # Break the loop once the ID is found
+            }
+        }
+    }
+
+	
+	for my $splice (reverse @splices) {
+		splice(@$lref, $splice, 1);
+	}
+
+	flush_file_lines($file);
+	unlock_file($file);
+	
+	return undef;
+}
+
 =head1 Utility
 
 Simple Utility functions
@@ -339,9 +537,9 @@ Simple Utility functions
 
 =cut
 
-sub get_files_in_dir() {
-	my $dir = @_[0];
-	opendir(DIR, $_[0]);
+sub get_files_in_dir {
+	my ($dir) = @_;
+	opendir(DIR, $dir);
 	local @rv = grep { $_ ne "." && $_ ne ".." } readdir(DIR);
 	closedir(DIR);
 	return @rv;

@@ -4,18 +4,31 @@ index_econfig=The Paldmin config file $1 was not found on your system. Maybe Pal
 index_epalworld=The PalServer program $1 was not found on your system. <br/><br/>Maybe PalServer is not installed, your <a href='$2'>module configuration</a> is incorrect, or the file has the wrong chmod flags.
 index_eservice=The PalServer daemon $1 was not found on your system or systemctl not found. <br/><br/>Maybe the daemon service is not registered or your <a href='$2'>module configuration</a> is incorrect.
 
+index_wrcon_conf=RCON is not configured in your <a href='$1'>module configuration</a>.
+index_wrcon_dir=Given RCON directory $1 in your <a href='$2'>module configuration</a> is invalid.
+index_wrcon_missing_exec=RCON $1 is not an executable. Please check your <a href='$2'>module configuration</a> and the file chmod.
+index_wrcon_disabled=RCON is currently disabled. Please adjust your World Settings.
+index_wrcon_pwd=AdminPassword is not set. Please adjust your World Settings.
+
 index_wsave_dir=Could not find savegame directory $1 .<br/>Please start the server once manually to create a default save. 
 index_wsave_conf=Could not find savegame config $1 .<br/>Please start the server once manually to create a default save and config.
+
+index_features_disabled=Some features are disabled.
+
 
 index_basic=Basic Info
 basic_state_title=Palworld Server State
 basic_upsince_title=Online Since
 basic_upsince_not_started=Not started yet
+basic_rcon_title=RCON State
+basic_players=Active Players
 
 index_glop=Global Options
 glop_ws=World Settings
 glop_reset_world=Reset World Settings
 glop_config=Config Files
+glop_playerlist=Active Player List
+glop_banlist=Banned Players
 
 
 index_start=Start Palworld Server
@@ -35,8 +48,8 @@ glop_ws_e=World Settings Error
 glop_ws_eread=Could not read existing world settings
 glop_ws_header=World Settings
 glop_ws_info=Beware of Syntax!
-glop_ws_info_desc=Stick to the following syntax rules: <ul><li>NEVER use commas (,) ANYWHERE.</li><li>Always use point (.) for decimals.</li><li>Use double quotes "" when they are already present.</li></ul><br>
-glop_ws_info_restart=<strong>Changes are only applied AFTER a restart</bold>
+glop_ws_info_desc=Stick to the following syntax rules: <ul><li>NEVER use commas (,) or equalsigns (=) ANYWHERE. (no, not even in the server name)</li><li>Always use point (.) for decimals.</li><li>Use double quotes "" when they are already present.</li></ul><br>
+change_restart_required=<strong>Changes are only applied AFTER a restart</bold>
 glop_ws_reset_desc=You can reset the world settings back to default.
 
 glop_ws_esave_title=Error while saving config
@@ -48,6 +61,25 @@ glop_config_txt=Files from $1
 glop_config_file=Edit Config File
 glop_config_efile=Invalid configuration file!
 glop_config_err=Failed to save configuration file
+
+banlist_info=If you want to ban an active player, please use the Active Player List
+banlist_unban=Remove Selected Bans
+banlist_new_ban=New Ban Entry
+banlist_eremove=Error trying to remove ban entry
+banlist_eadd=Error trying to add new ban entry
+banlist_eadd_missdir=No SaveGame directory $1 .
+banlist_eadd_missid=No SteamID detected to ban
+banlist_eadd_duplicate=SteamID already banned
+banlist_eremove_nosteamid=No SteamIDs selected
+
+error=Error
+rcon_no_command=No RCON command recognized to perform.
+rcon_command_failed=RCON command failed to execute: $1 <br/> Result: $2
+
+ok=Okay
+nok=Not Okay
+
+add=Add
 
 online=Online
 offline=Offline

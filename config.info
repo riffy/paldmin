@@ -1,4 +1,5 @@
-palserver=Full path to PalServer Directory,0
+palserver=Full path to PalServer Directory,7
 paldmin_config=Full path to Paldmin config file,0
 pid_file=Full path to Paldmin PID file,3,None
 systemctl=Daemon Service (systemctl start ...),3,None
+rcon_dir=Full path to RCON directory,7
