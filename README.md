@@ -13,6 +13,7 @@ A [Webmin](https://webmin.com/) module for easy configure and control of a Palwo
 ### Upcoming Features
 * Extend OS compatibility
 * Wine Support for [Modded Linux Server](https://github.com/CuteNatalie/Palworld-Modded-Server-Linux)
+* Discord Bot Integration 
 * Restart Scheduler with RAM Usage
 * Set Backup Plan
 * Custom RCON command
