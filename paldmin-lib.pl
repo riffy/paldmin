@@ -240,8 +240,40 @@ Basic Service Info about status etc
 
 =cut
 
+=head1 get_service_status
 
-=head2 get_service_state
+Retrieves the service status via systemctl and returns a hash with the info.
+Returns: {
+	'state': 'active' | 'loaded' | 'inactive' | ...
+}
+
+=cut
+
+sub get_service_status {
+	my %rv;
+    my $systemctlcmd = has_command("systemctl");
+    my $res = backquote_command("$systemctlcmd status $config{'systemctl'}");
+	# Extract information from the command output
+	if ($res =~ /Loaded: .+; (\w+); preset: \w+/) {
+		$rv{'atboot'} = $1;
+	}
+
+	if ($res =~ /Active: (\w+)/) {
+		$rv{'state'} = $1;
+	}
+
+	if ($res =~ /Active: \w+ \(\w+\)\ssince\s([^*].*)/) {
+		$rv{'upsince'} = $1;
+	}
+
+	if ($res =~ /Memory: (\d+[^\n]*)/) {
+		$rv{'memory'} = $1;
+	}
+	return %rv;
+}
+
+
+=head2 get_server_state
 
 Returns the service state or undef if no systemctl registered
 

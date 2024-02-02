@@ -4,6 +4,9 @@ index_econfig=The Paldmin config file $1 was not found on your system. Maybe Pal
 index_epalworld=The PalServer program $1 was not found on your system. <br/><br/>Maybe PalServer is not installed, your <a href='$2'>module configuration</a> is incorrect, or the file has the wrong chmod flags.
 index_eservice=The PalServer daemon $1 was not found on your system or systemctl not found. <br/><br/>Maybe the daemon service is not registered or your <a href='$2'>module configuration</a> is incorrect.
 
+index_atboot=Start at boot?
+index_atbootdesc=Change this option to control whether the Palword Server is started at boot time or not.
+
 index_wrcon_conf=RCON is not configured in your <a href='$1'>module configuration</a>.
 index_wrcon_dir=Given RCON directory $1 in your <a href='$2'>module configuration</a> is invalid.
 index_wrcon_missing_exec=RCON $1 is not an executable. Please check your <a href='$2'>module configuration</a> and the file chmod.
@@ -22,6 +25,7 @@ basic_upsince_title=Online Since
 basic_upsince_not_started=Not started yet
 basic_rcon_title=RCON State
 basic_players=Active Players
+basic_ram_usage=RAM Usage
 
 index_glop=Global Options
 glop_ws=World Settings
@@ -29,6 +33,7 @@ glop_reset_world=Reset World Settings
 glop_config=Config Files
 glop_playerlist=Active Player List
 glop_banlist=Banned Players
+glop_scheduler=Restart Scheduler
 
 
 index_start=Start Palworld Server
@@ -72,14 +77,38 @@ banlist_eadd_missid=No SteamID detected to ban
 banlist_eadd_duplicate=SteamID already banned
 banlist_eremove_nosteamid=No SteamIDs selected
 
+scheduler_text=This form allows you to schedule a restart for the Palworld Server.
+scheduler_ecron_missing=Cron not found on the system, or current user is not allowed to schedule cron jobs.<br/>Please install cron or allow access.
+scheduler_ecron_exe=The cron script at $1 is incorrect, or the file has the wrong chmod flags.<br/>File requires executable (+x) flag.
+scheduler_cycle=Restart Cycle
+scheduler_cyc=Restart Cycle enabled?
+scheduler_cyc1=Yes, every ...
+scheduler_schedule=Restart Schedule
+scheduler_sched=Scheduled restart enabled?
+scheduler_sched1=Yes, at times chosen below ..
+scheduler_announce=Restart Announcement
+scheduler_announce_note=Note: If activated, an announcement for restart is send via RCON Broadcast 15,10,5 and 1 minute before restart. So the restart is delayed by 15 minutes in comparison to the entered time.
+scheduler_ann=Announce restart ?
+scheduler_ann_result=Delay restart with announce: $1
+scheduler_upd=Scheduler Updated
+scheduler_err=Scheduled Restart failed
+scheduler_ccron=Scheduled restart for server enabled.
+scheduler_dcron=Scheduled restart for server disabled.
+scheduler_ucron=Scheduled restart times for server updated.
+scheduler_ncron=Scheduled restart for server left disabled.
+
+atboot_e=Error while trying to change boot runtime
+
 error=Error
 rcon_no_command=No RCON command recognized to perform.
 rcon_command_failed=RCON command failed to execute: $1 <br/> Result: $2
 
 ok=Okay
 nok=Not Okay
-
+save=Save
 add=Add
+yes=Yes
+no=No
 
 online=Online
 offline=Offline
