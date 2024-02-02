@@ -87,9 +87,9 @@ if ($rcon_ok) {
 }
 
 
-push(@links, 'list_bans.cgi');
-push(@titles, $text{'glop_banlist'});
-push(@images, 'images/glop_banlist.png');
+push(@links, ( 'list_bans.cgi', 'scheduler.cgi' ));
+push(@titles, ( $text{'glop_banlist'}, $text{'glop_scheduler'}));
+push(@images, ('images/glop_banlist.png', 'images/glop_scheduler.png'));
 
 icons_table(\@links, \@titles, \@images, 5);
 
