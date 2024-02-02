@@ -11,6 +11,7 @@ A [Webmin](https://webmin.com/) module for easy configure and control of a Palwo
 ![Screenshot of Paldmin](./docs/images/readme_01.PNG)
 
 ### Upcoming Features
+* Extend OS compatibility
 * Restart Scheduler with RAM Usage
 * Set Backup Plan
 * Custom RCON command
