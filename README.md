@@ -8,7 +8,7 @@ This module is still big **Work In Progress**.
 * Basic Info
 * Edit PalWorldSettings.ini (or any other .ini file)
 * Full RCON Support (Kick / Ban Player, Broadcast, List Player, ...)
-* Restart Scheduler
+* Restart Scheduler with automated Announcements
 
 ![Screenshot of Paldmin](./docs/images/readme_01.PNG)
 
