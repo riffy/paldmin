@@ -42,3 +42,21 @@ And allows for kicking / banning a player using the rcon client.
 ## Banned Player
 
 Reads the `banlist.txt` and allows for removing / adding ban entries
+
+## Restart Scheduler
+
+The restart scheduler allows to create / adjust a CRON job to be executed at certain times, that will restart the service and therefore the server.
+
+> [!CAUTION]
+> If you use the scheduler, you may want to remove the `RuntimeMaxSec` property from the service.
+> Edit the service via `sudo nano /etc/systemd/system/palworld.service` (or any other editor) and delete the line `RuntimeMaxSec=4h`. After that you need to reload the daemon `sudo systemctl daemon-reload`
+
+![Restart Announcement](./images/schedule_01.PNG)
+
+### Restart Announcement
+> [!NOTE]
+> * [RCON](./install.md#rcon) required
+
+As noted, if set, the scheduler will delay the restart by 15minutes and make an announcement for 15, 10, 5 and 1 minute remaining until restart:
+
+![Restart Announcement](./images/schedule_02.PNG)
