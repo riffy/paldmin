@@ -25,6 +25,10 @@ jobs:
         run: |
           rm -rf ./paldmin/docs && rm -rf ./paldmin/.git && rm -rf ./paldmin/.github
   
+      - name: Apply CHMOD to PL and CGI files
+        run: |
+          find ./paldmin -type f \( -name "*.pl" -o -name "*.cgi" \) -exec chmod +x {} \;
+   
       - name: Create Artifact
         run: |
           tar -zcvf "paldmin-${{ github.event.inputs.release_version }}.tar.gz" ./paldmin
