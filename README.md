@@ -1,8 +1,6 @@
 # Paldmin
 A [Webmin](https://webmin.com/) module for easy configure and control of a Palworld Server.
 
-This module is still big **Work In Progress**.
-
 ### Current Features
 * Starting, Stopping, Restarting Server via daemon
 * Basic Info
