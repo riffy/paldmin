@@ -24,10 +24,18 @@ jobs:
       - name: Remove Unwanted Directories
         run: |
           rm -rf ./paldmin/docs && rm -rf ./paldmin/.git && rm -rf ./paldmin/.github
+
+      - name: Display File Permissions Before
+        run: |
+          ls -lR ./paldmin
   
       - name: Apply CHMOD to PL and CGI files
         run: |
           find ./paldmin -type f \( -name "*.pl" -o -name "*.cgi" \) -exec chmod +x {} \;
+
+      - name: Display File Permissions After
+        run: |
+          ls -lR ./paldmin
    
       - name: Create Artifact
         run: |
