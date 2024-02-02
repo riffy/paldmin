@@ -16,10 +16,12 @@ This module is still big **Work In Progress**.
 * Restart Scheduler with RAM Usage
 * Set Backup Plan
 * Custom RCON command
-* Savegame Editor
-	* Download Players
-	* Download World
-	* Upload ?
+* List Player
+	* List / Download .sav File (hex GUID)
+* Savegame / SaveFile Editor
+	* Download Players (as .sav / as .json)
+	* Download World (as .sa / as .json)
+	* Upload & Overwrite
 
 ## Installation
 
