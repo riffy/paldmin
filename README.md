@@ -1,8 +1,6 @@
 # Paldmin
 A [Webmin](https://webmin.com/) module for easy configure and control of a Palworld Server.
 
-This module is still big **Work In Progress**.
-
 ### Current Features
 * Starting, Stopping, Restarting Server via daemon
 * Basic Info
@@ -13,6 +11,9 @@ This module is still big **Work In Progress**.
 ![Screenshot of Paldmin](./docs/images/readme_01.PNG)
 
 ### Upcoming Features
+* Extend OS compatibility
+* Wine Support for [Modded Linux Server](https://github.com/CuteNatalie/Palworld-Modded-Server-Linux)
+* Discord Bot Integration 
 * Restart Scheduler with RAM Usage
 * Set Backup Plan
 * Custom RCON command
