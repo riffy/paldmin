@@ -3,6 +3,7 @@
 # Page for configuring restart scheduler
 
 require './paldmin-lib.pl';
+require './rcon-lib.pl';
 
 ui_print_header($text{'glop_scheduler'}, $text{'index_title'}, "");
 

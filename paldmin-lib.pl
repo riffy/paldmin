@@ -1,4 +1,4 @@
-=head1 paldmin-lib.pl
+=head1 Paldmin Library
 
 Functions for the Palworld Server configuration.
 
@@ -7,6 +7,9 @@ Functions for the Palworld Server configuration.
 use WebminCore;
 
 init_config();
+
+# Globals
+our $module_config_url = "@{[&get_webprefix()]}/config.cgi?$module_name";
 
 =head2 Validation
 
@@ -28,11 +31,6 @@ Returns:
 =cut
 
 sub validate_config() {
-	# Check if paldmin config file exists
-	if (!-r $config{'paldmin_config'}) {
-		return ('error', 'Module Config', text('index_econfig',"<tt>$config{'paldmin_config'}</tt>", "@{[&get_webprefix()]}/config.cgi?$module_name"))
-	}
-
 	my ($e, $sp) = get_script_validation();
 	if ($e > 0) {
 		return ('error', 'Module Config', text('index_epalworld',"<tt>$sp</tt>", "@{[&get_webprefix()]}/config.cgi?$module_name"))
@@ -146,94 +144,6 @@ sub get_saveconfig_validation() {
 	return ((!-r $conf_world_settings), $conf_world_settings);
 }
 
-=head2 validate_rcon()
-
-Checks if rcon is valid, enabled, etc.
-
-=cut
-sub validate_rcon() {
-	# Check if RCON is in module config
-	my $rcon_dir = $config{'rcon_dir'};
-	if (!defined $rcon_dir || $rcon_dir eq "") {
-		return text('index_wrcon_conf', "@{[&get_webprefix()]}/config.cgi?$module_name");
-	}
-	elsif (!-d $rcon_dir) {
-		return text('index_wrcon_dir', $rcon_dir, "@{[&get_webprefix()]}/config.cgi?$module_name");
-	}
-	else {
-		my ($res, $rc) = get_rcon_exec_validation();
-		if ($res > 0) {
-			return text('index_wrcon_missing_exec', $rc, "@{[&get_webprefix()]}/config.cgi?$module_name");
-		}
-		elsif (!is_rcon_enabled()) {
-			return text('index_wrcon_disabled');
-		}
-		elsif (!is_rcon_password_valid()) {
-			return text('index_wrcon_pwd');
-		}
-		return undef;
-	}
-}
-
-=head2 get_rcon_exec_validation()
-
-Checks if rcon executable is at configured path.
-Returns:
-	@[
-		>0 if error, 0 on success
-		checked path
-	]
-
-=cut
-
-sub get_rcon_exec_validation() {
-	my $rc = "$config{'rcon_dir'}/rcon";
-	return ((!-x $rc), $rc);
-}
-
-=head2 is_rcon_enabled()
-
-Checks the current world settings and returns 1 if rcon is enabled, else 0
-
-=cut
-
-sub is_rcon_enabled() {
-	my %settings = get_world_settings();
-	return 1 if ($settings{'RCONEnabled'} eq "True");
-	return 0;
-}
-
-=head2 get_rcon_password()
-
-Returns the rcon password in between the "" from settings or undefined
-
-=cut
-
-sub get_rcon_password() {
-	my %settings = get_world_settings();
-	if ($settings{'AdminPassword'} =~ /"([^"]*)"/) {
-		my $pwd = $1;
-		return undef if (length($pwd) <= 0);
-		return $1;
-	} else {
-		return undef;
-	}
-}
-
-=head2 is_rcon_password_valid()
-
-Checks if the current admin password from world settings is valid.
-Return 0 on error, 1 on succes
-
-=cut
-
-sub is_rcon_password_valid() {
-	my $pwd = get_rcon_password();
-	return 0 if (!defined $pwd);
-	return 1;
-}
-
-
 =head1 Service Info
 
 Basic Service Info about status etc
@@ -253,6 +163,7 @@ sub get_service_status {
 	my %rv;
     my $systemctlcmd = has_command("systemctl");
     my $res = backquote_command("$systemctlcmd status $config{'systemctl'}");
+
 	# Extract information from the command output
 	if ($res =~ /Loaded: .+; (\w+); preset: \w+/) {
 		$rv{'atboot'} = $1;
@@ -269,6 +180,7 @@ sub get_service_status {
 	if ($res =~ /Memory: (\d+[^\n]*)/) {
 		$rv{'memory'} = $1;
 	}
+
 	return %rv;
 }
 
@@ -306,7 +218,7 @@ sub up_since() {
     if ($out =~ /ActiveEnterTimestamp=(.+)/) {
         return $1;
     } else {
-        return $text{'basic_upsince_not_started'};
+        return $text{'index_service_upsince_ns'};
     }
 }
 

@@ -5,7 +5,6 @@
 # if RCON is valid and enabled
 
 $no_acl_check++;
-require './paldmin-lib.pl';
 require './rcon-lib.pl';
 
 my $rcon_validation = validate_rcon();

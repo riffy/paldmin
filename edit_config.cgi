@@ -2,7 +2,8 @@
 # edit_config.cgi
 # Show a config file for manual editing
 
-require './paldmin-lib.pl';
+require "./paldmin-ui-lib.pl";
+require "./paldmin-lib.pl";
 ReadParse();
 ui_print_header($text{'glop_config'}, $text{'index_title'}, "");
 
@@ -10,7 +11,7 @@ ui_print_header($text{'glop_config'}, $text{'index_title'}, "");
 # File Selector
 my ($esd, $sd) = get_savedir_validation();
 if ($esd > 0) {
-	display_box('danger', 'Palworld Config Missing', text('index_wsave_dir',"<tt>$sd</tt>"))
+	alert_box('error', text('index_wsave_dir',"<tt>$sd</tt>"))
 } else {
 	my $dir = "$sd/Config/LinuxServer";
 	print "<b>".text("glop_config_txt", $dir)."</b><br/><br/>";

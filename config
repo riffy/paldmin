@@ -3,3 +3,5 @@ paldmin_config=/etc/paldmin.conf
 pid_file=/var/run/paldmin.pid
 systemctl=palworld.service
 rcon_dir=
+rcon_overwrite_addr=
+rcon_overwrite_pwd=
