@@ -2,26 +2,28 @@
 # schedule_restart.cgi
 # Apply the scheduled restart
 
-require './paldmin-lib.pl';
+require "./paldmin-lib.pl";
+require "./paldmin-ui-lib.pl";
+
 ReadParse();
-ui_print_header(undef, $text{'scheduler_schedule'}, "");
-error_setup($text{'scheduler_err'});
+ui_print_header(undef, $text{"scheduler_schedule"}, "");
+error_setup($text{"scheduler_err"});
 
 # Update the cron job
 $cron = foreign_installed("cron");
 if (!$cron) {
-	error($text{'scheduler_ecron_missing'});
+	error($text{"scheduler_ecron_missing"});
 }
 foreign_require("cron");
 
 # Retrieve the job and overwrite values, or create new
 @jobs = cron::list_cron_jobs();
 my $cmd = "$module_config_directory/cron_restart.pl";
-($job) = grep { $_->{'command'} eq $cmd } @jobs;
+($job) = grep { $_->{"command"} eq $cmd } @jobs;
 $oldjob = $job;
-$job ||= { 'command' => $cmd,
-		   'user' => 'root',
-		   'active' => 1 };
+$job ||= { "command" => $cmd,
+		   "user" => "root",
+		   "active" => 1 };
 cron::parse_times_input($job, \%in);
 
 # Create a wrapper for the cron_restart.pl file
@@ -32,15 +34,15 @@ unlock_file($cmd);
 # Lock the cron file and create entry into it or delete old entry
 lock_file(cron::cron_file($job));
 my $what = "";
-if ($in{'sched'} && !$oldjob) {
+if ($in{"sched"} && !$oldjob) {
 	# Need to create cron job
 	cron::create_cron_job($job);
 	$what = "scheduler_ccron";
-} elsif (!$in{'sched'} && $oldjob) {
+} elsif (!$in{"sched"} && $oldjob) {
 	# Need to delete cron job
 	cron::delete_cron_job($job);
 	$what = "scheduler_dcron";
-} elsif ($in{'sched'} && $oldjob) {
+} elsif ($in{"sched"} && $oldjob) {
 	# Need to update cron job
 	cron::change_cron_job($job);
 	$what = "scheduler_ucron";
@@ -51,15 +53,15 @@ if ($in{'sched'} && !$oldjob) {
 unlock_file(cron::cron_file($job));
 
 # Update the announcement
-$config{'scheduler_announce'} = (%in{'scheduler_announce'} == 1 ? 1 : 0);
-my $what_ann = ($config{'scheduler_announce'} == 1) ? "yes" : "no";
+$config{"scheduler_announce"} = (%in{"scheduler_announce"} == 1 ? 1 : 0);
+my $what_ann = ($config{"scheduler_announce"} == 1) ? "active" : "inactive";
 save_module_config();
 
-display_box(
-	($what eq 'scheduler_ncron') ? 'info' : 'success', 
-	$text{'scheduler_upd'},
-	$text{$what}."<br/>".text('scheduler_ann_result', $text{$what_ann})
+alert_box_with_collapsible(
+	($what eq "scheduler_ncron") ? "info" : "success", 
+	$text{"scheduler_upd"},
+	$text{$what}."<br/>".text("scheduler_ann_result", $text{$what_ann})
 );
 
-ui_print_footer("", $text{'index_return'});
+ui_print_footer("", $text{"index_return"});
 
