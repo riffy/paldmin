@@ -23,6 +23,10 @@ A [Webmin](https://webmin.com/) module for easy configure and control of a Palwo
 	* Download Players (as .sav / as .json)
 	* Download World (as .sa / as .json)
 	* Upload & Overwrite
+* Logs
+	* Player login/logout
+* Javascript Module
+	* A bun wrapper to allow custom javascript to run and listen for events (player joined, player left, etc.) allowing for incode access to rcon  
 
 ## Installation
 
