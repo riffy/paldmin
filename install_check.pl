@@ -1,5 +1,5 @@
 
-do 'paldmin-lib.pl';
+do "paldmin-lib.pl";
 
 =head2 is_installed(mode)
 
@@ -11,7 +11,7 @@ For mode 0, returns 1 if installed, 0 if not
 sub is_installed
 {
 	my $mode = $_[0];
-	if (-r $config{'paldmin_config'}) {
+	if (-r $config{"paldmin_config"}) {
 		return $mode + 1;
 	}
 	return 0;

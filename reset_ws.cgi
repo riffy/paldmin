@@ -2,16 +2,25 @@
 # reset_ws.cgi
 # Resets the existing palworld settings
 
-require './paldmin-lib.pl';
+require "./paldmin-lib.pl";
+require "./paldmin-ui-lib.pl";
 
-ui_print_header($text{'glop_reset_world'}, $text{'index_title'}, "", "intro", 1, 1);
+ui_print_header($text{"glop_reset_world"}, $text{"index_title"}, "", "intro", 1, 1);
 
 my ($efile, $ini) = get_saveconfig_validation();
 my %def = get_default_world_settings();
 if (!%def || !keys %def) {
-	display_box('error', $text{'glop_ws_e'}, $text{'glop_ws_eread'});
+	alert_box_with_collapsible(
+		"error",
+		$text{"glop_ws_e"},
+		$text{"glop_ws_eread"}
+	);
 } elsif ($efile > 0) {
-	display_box('error', $text{'glop_ws_e'}, text('index_wsave_conf', $ini));
+	alert_box_with_collapsible(
+		"error",
+		$text{"glop_ws_e"},
+		text("index_wsave_conf", $ini)
+	);
 } else {
 	# Construct the contents of the ini file
 	my $total_keys = scalar(keys %def);
@@ -21,7 +30,7 @@ if (!%def || !keys %def) {
 	for my $key (keys %def) {
 		$current_key_count++;
 		$option_settings .= $key."=".%def{$key};
-		# Append a comma if it's not the last key
+		# Append a comma if it"s not the last key
     	$option_settings .= "," unless $current_key_count == $total_keys;
 	}
 	$option_settings .= ")";
@@ -38,9 +47,9 @@ if (!%def || !keys %def) {
 	close_tempfile(CONF);
 
 	webmin_log("reset_ws");
-	display_box('success', $text{'glop_ws_header'}, text('glop_ws_reset_succ', $ini).$text{'change_restart_required'});
+	alert_box_with_collapsible("success", $text{"glop_ws_header"}, text("glop_ws_reset_succ", $ini).$text{"change_restart_required"});
 }
 
-ui_print_footer("", $text{'index_return'});
+ui_print_footer("", $text{"index_return"});
 
 1;

@@ -206,22 +206,6 @@ sub is_server_running() {
 	return (get_server_state() eq "active") ? 1 : 0;
 }
 
-=head2 up_since()
-
-Returns the timestamp the service was started.
-Returns ? if the server is offline
-
-=cut
-sub up_since() {
-	my $out = backquote_command("systemctl show $config{'systemctl'} --property=ActiveEnterTimestamp");
-	# Extract everything after "ActiveEnterTimestamp="
-    if ($out =~ /ActiveEnterTimestamp=(.+)/) {
-        return $1;
-    } else {
-        return $text{'index_service_upsince_ns'};
-    }
-}
-
 =head1 Server Control
 
 Basic things to control the server, such as start, stop, restart, etc.
@@ -487,29 +471,6 @@ sub get_files_in_dir {
 	local @rv = grep { $_ ne "." && $_ ne ".." } readdir(DIR);
 	closedir(DIR);
 	return @rv;
-}
-
-
-=head2 display_box(type, title, content)
-
-Displays a generic box based on the type title and content provided.
-type: danger | warning | info  -> Else success
-
-=cut
-
-sub display_box() {
-	my $alert_box_type = 'success';
-	if (@_[0] eq 'danger') { $alert_box_type = 'error' }
-	elsif (@_[0] eq 'warning') { $alert_box_type = 'warn' }
-	elsif (@_[0] eq 'info') { $alert_box_type = 'info' }
-
-	print ui_alert_box('', $alert_box_type);
-	print ui_details({
-		'title' => @_[1],
-		'content' => @_[2],
-		'class' => @_[0],
-		'html' => 1},
-		1);
 }
 
 1;

@@ -18,10 +18,10 @@ Desc: Gets displayed after a br.
 =cut
 
 sub alert_box {
-	my $alert_box_type = 'danger';
-	if (@_[0] eq 'success') { $alert_box_type = 'success' }
-	elsif (@_[0] eq 'warning') { $alert_box_type = 'warn' }
-	elsif (@_[0] eq 'info') { $alert_box_type = 'info' }
+	my $alert_box_type = "danger";
+	if (@_[0] eq "success") { $alert_box_type = "success" }
+	elsif (@_[0] eq "warning") { $alert_box_type = "warn" }
+	elsif (@_[0] eq "info") { $alert_box_type = "info" }
 
 	my $title = (defined @_[1]) ? @_[1]."<br/>" : "";
 	my $desc = (defined @_[2]) ? @_[2] : "";
@@ -40,10 +40,10 @@ Desc: Gets displayed in the collapsible part
 
 sub collapsible_box {
 	print ui_details({
-		'title' => @_[1],
-		'content' => @_[2],
-		'class' => @_[0],
-		'html' => 1},
+		"title" => @_[1],
+		"content" => @_[2],
+		"class" => @_[0],
+		"html" => 1},
 		1);
 }
 

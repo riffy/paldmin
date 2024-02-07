@@ -15,7 +15,7 @@ ui_print_header(text("index_subtitle", $module_version), $text{"index_title"}, "
 # Validate the base config of the module
 my ($ety, $eti, $ec) = validate_config();
 if (defined $ety) {
-	display_box($ety, $eti, $ec);
+	alert_box_with_collapsible($ety, $eti, $ec);
 	ui_print_footer("/", $text{"index"});
 	exit;
 }
@@ -23,7 +23,7 @@ if (defined $ety) {
 # Validate palserver directory and savegame
 my ($wty, $wti, $wc) = validate_savegame();
 if (defined $wty) {
-	display_box($wty, $wti, $wc);
+	alert_box_with_collapsible($wty, $wti, $wc);
 	ui_print_footer("/", $text{"index"});
 	exit;
 }

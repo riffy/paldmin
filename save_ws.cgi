@@ -2,16 +2,16 @@
 # save_ws.cgi
 # Save the given Palworld Settings by POST
 
-require './paldmin-lib.pl';
+require "./paldmin-lib.pl";
 
-error_setup($text{'glop_ws_esave_title'});
+error_setup($text{"glop_ws_esave_title"});
 ReadParse();
 my ($efile, $ini) = get_saveconfig_validation();
 if ($efile > 0) {
-	error(text('index_wsave_conf', $ini));
+	error(text("index_wsave_conf", $ini));
 } else {
 	# Remove the "save" post
-	delete $in{'save'};
+	delete $in{"save"};
 
 	# Construct the contents of the ini file
 	my $total_keys = scalar(keys %in);
@@ -21,7 +21,7 @@ if ($efile > 0) {
 	for my $key (keys %in) {
 		$current_key_count++;
 		$option_settings .= $key."=".%in{$key};
-		# Append a comma if it's not the last key
+		# Append a comma if it"s not the last key
     	$option_settings .= "," unless $current_key_count == $total_keys;
 	}
 	$option_settings .= ")";
