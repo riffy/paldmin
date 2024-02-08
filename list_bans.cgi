@@ -3,7 +3,6 @@
 # Lists all active banned players
 
 require "./paldmin-lib.pl";
-require "./rcon-lib.pl";
 require "./paldmin-ui-lib.pl";
 
 ui_print_header($text{"glop_banlist"}, $text{"index_title"}, "");

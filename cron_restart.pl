@@ -8,6 +8,8 @@ $no_acl_check++;
 require "./paldmin-lib.pl";
 require "./rcon-lib.pl";
 
+init_rcon();
+
 # Check for rcon and if server is running
 if (is_server_running() && $rcon{"valid"} && $config{'scheduler_announce'} == 1) {
 	my ($ok, $exec, $output) = broadcast("Scheduled Restart in 15min...");

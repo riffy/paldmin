@@ -5,7 +5,17 @@
 do "./paldmin-lib.pl";
 
 # Global
-our %rcon = init_rcon();
+our %rcon = (
+	"enabled" => 0,
+	"valid" => 0,
+	"addr" => undef,
+	"pwd" => undef,
+	"bin" => undef,
+	"msg" => {
+		"type" => undef,
+		"content" => undef
+	}
+);
 
 
 =head1 RCON
@@ -22,7 +32,7 @@ Basic RCON configuration, including overwrite
 
 =head2 init_rcon()
 
-Returns configured rcon in a hash:
+Initializes rcon with a hash:
 	enabled:
 		If RCON is enabled by World Settings or if overwritten by module config
 	valid:
@@ -39,133 +49,58 @@ Returns configured rcon in a hash:
 =cut
 
 sub init_rcon {
-	my %rv = (
-		"enabled" => 0,
-		"valid" => 0,
-		"addr" => undef,
-		"pwd" => undef,
-		"bin" => undef,
-		"msg" => (
-			"type" => undef,
-			"content" => undef
-		)
-	);
 	my %settings = get_world_settings();
 
 	# Check if rcon is enabled and fill Address
 	if (defined $config{"rcon_overwrite_addr"} && length($config{"rcon_overwrite_addr"}) > 0) {
-		$rv{"enabled"} = 1;
-		$rv{"addr"} = $config{"rcon_overwrite_addr"};
+		$rcon{"enabled"} = 1;
+		$rcon{"addr"} = $config{"rcon_overwrite_addr"};
 	} else {
-		$rv{"enabled"} = ($settings{'RCONEnabled'} eq "True") ? 1 : 0;
-		$rv{"addr"} = "127.0.0.1:".$settings{'RCONPort'};
+		$rcon{"enabled"} = ($settings{'RCONEnabled'} eq "True") ? 1 : 0;
+		$rcon{"addr"} = "127.0.0.1:".$settings{'RCONPort'};
 	}
 
-	if (!$rv{"enabled"}) {
-		$rv{"msg"}{"type"} = "info";
-		$rv{"msg"}{"content"} = text("index_ircon_disabled", $module_config_url);
-		return %rv;
+	if (!$rcon{"enabled"}) {
+		$rcon{"msg"}{"type"} = "info";
+		$rcon{"msg"}{"content"} = text("index_ircon_disabled", $module_config_url);
+		return;
 	}
 
 	# Parse the Password
-	if (defined $config{"rcon_overwrite_pwd"} && length($config{"rcon_overwrite_pwd"} > 0)) {
-		$rv{"pwd"} = $config{"rcon_overwrite_pwd"};
+	if (defined $config{"rcon_overwrite_pwd"} && length($config{"rcon_overwrite_pwd"}) > 0) {
+		$rcon{"pwd"} = $config{"rcon_overwrite_pwd"};
 	} elsif ($settings{'AdminPassword'} =~ /"([^"]*)"/) {
 		my $pwd = $1;
-		$rv{"pwd"} = $pwd unless (length($pwd) <= 0);
+		$rcon{"pwd"} = $pwd unless (length($pwd) <= 0);
 	}
 
-	if (!defined $rv{"pwd"}) {
-		$rv{"msg"}{"type"} = "warning";
-		$rv{"msg"}{"content"} = text("index_wrcon_pwd", $module_config_url);
-		return %rv;
+	if (!defined $rcon{"pwd"}) {
+		$rcon{"msg"}{"type"} = "warning";
+		$rcon{"msg"}{"content"} = text("index_wrcon_pwd", $module_config_url);
+		return;
 	}
 
 	# Check if RCON client is valid
 	my $rcon_dir = $config{'rcon_dir'};
 	if (!defined $rcon_dir || $rcon_dir eq "") {
-		$rv{"msg"}{"type"} = "warning";
-		$rv{"msg"}{"content"} = text('index_wrcon_conf', $module_config_url);
+		$rcon{"msg"}{"type"} = "warning";
+		$rcon{"msg"}{"content"} = text('index_wrcon_conf', $module_config_url);
+		return;
 	}
-	elsif (!-d $rcon_dir) {
-		$rv{"msg"}{"type"} = "warning";
-		$rv{"msg"}{"content"} = text('index_wrcon_dir', $rcon_dir, $module_config_url);
-		return %rv;
-	}
-	else {
-		my ($res, $rc) = get_rcon_exec_validation();
-		if ($res > 0) {
-			$rv{"msg"}{"type"} = "warning";
-			$rv{"msg"}{"content"} = text('index_wrcon_missing_exec', $rc, $module_config_url);
-		}
-		else {
-			$rv{"bin"} = $rc;
-		}
+	if (!-d $rcon_dir) {
+		$rcon{"msg"}{"type"} = "warning";
+		$rcon{"msg"}{"content"} = text('index_wrcon_dir', $rcon_dir, $module_config_url);
+		return;
 	}
 
-	if (defined $rv{"bin"}) {
-		$rv{"valid"} = 1;
+	my $rc_exec = "$rcon_dir/rcon";
+	if ((!-x $rc_exec)) {
+		$rcon{"msg"}{"type"} = "warning";
+		$rcon{"msg"}{"content"} = text('index_wrcon_missing_exec', $rc_exec, $module_config_url);
+	} else {
+		$rcon{"bin"} = $rc_exec;
+		$rcon{"valid"} = 1;
 	}
-
-	return %rv;
-}
-
-=head2 is_rcon_enabled()
-
-Returns 1 if rcon is either enabled in the current world settings,
-or if an overwrite address is provided.
-
-=cut
-
-sub is_rcon_enabled() {
-	my %settings = get_world_settings();
-	return 1 if ($settings{'RCONEnabled'} eq "True");
-	return 0;
-}
-
-=head2 validate_rcon()
-
-Checks if rcon is valid, enabled, etc.
-
-=cut
-sub validate_rcon {
-	# Check if RCON is in module config
-	my $rcon_dir = $config{'rcon_dir'};
-	if (!defined $rcon_dir || $rcon_dir eq "") {
-		return text('index_wrcon_conf', "@{[&get_webprefix()]}/config.cgi?$module_name");
-	}
-	elsif (!-d $rcon_dir) {
-		return text('index_wrcon_dir', $rcon_dir, "@{[&get_webprefix()]}/config.cgi?$module_name");
-	}
-	else {
-		my ($res, $rc) = get_rcon_exec_validation();
-		if ($res > 0) {
-			return text('index_wrcon_missing_exec', $rc, "@{[&get_webprefix()]}/config.cgi?$module_name");
-		}
-		elsif (!is_rcon_enabled()) {
-			return text('index_ircon_disabled');
-		}
-		elsif (!is_rcon_password_valid()) {
-			return text('index_wrcon_pwd');
-		}
-		return undef;
-	}
-}
-
-=head2 get_rcon_exec_validation()
-
-Checks if rcon executable is at configured path.
-Returns:
-	@[
-		>0 if error, 0 on success
-		checked path
-	]
-
-=cut
-
-sub get_rcon_exec_validation {
-	my $rc = "$config{'rcon_dir'}/rcon";
-	return ((!-x $rc), $rc);
 }
 
 =head2 get_rcon_password()
@@ -243,7 +178,7 @@ Returns the info string in the output
 =cut
 
 sub get_info {
-	return rcon_command_2("Info");
+	return rcon_command("Info");
 }
 
 =head3 get_active_players()
@@ -336,26 +271,6 @@ Returns:
 
 sub rcon_command {
 	my ($cmd) = @_;
-	my %settings = get_world_settings();
-	my ($res, $rc) = get_rcon_exec_validation();
-	my $exec = "$rc -a 127.0.0.1:" . $settings{'RCONPort'} . " -p " . get_rcon_password() . " \"$cmd\"";
-	my $ok = 0;
-	if (length($cmd) <= 0) {
-		return ($ok, $exec, text('rcon_no_command'));
-	}
-
-	if ($res > 0) {
-		return ($ok, $exec, text('index_wrcon_missing_exec', $rc, "@{[&get_webprefix()]}/config.cgi?$module_name"));
-	}
-
-	my $output = backquote_command($exec . " 2>&1 </dev/null ");
-	$ok = (($output =~ /^cli:/ || $output eq "Unknown command\n" || $output =~ /^Usage:/) ? 0 : 1);
-	return ($ok, $exec, $output);
-}
-
-
-sub rcon_command_2 {
-	my ($cmd) = @_;
 	my $ok = 0;
 	my $exec = "";
 	if (!$rcon{"valid"}) {
@@ -371,4 +286,5 @@ sub rcon_command_2 {
 	$ok = (($output =~ /^cli:/ || $output eq "Unknown command\n" || $output =~ /^Usage:/) ? 0 : 1);
 	return ($ok, $exec, $output);
 }
+
 1;

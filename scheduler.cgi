@@ -2,8 +2,11 @@
 # restart_scheduler.cgi
 # Page for configuring restart scheduler
 
+require "./paldmin-ui-lib.pl";
 require "./paldmin-lib.pl";
 require "./rcon-lib.pl";
+
+init_rcon();
 
 ui_print_header($text{"glop_scheduler"}, $text{"index_title"}, "");
 
@@ -48,17 +51,15 @@ print ui_hidden_table_end("sched");
 # Restart Options
 print ui_hidden_table_start($text{"scheduler_announce"}, "width=100%", 2, "announce", 1, [ "width=30%" ]);
 
-print "</br>".$text{"scheduler_announce_note"}."</br>"."</br>";
+print "<br/>".$text{"scheduler_announce_note"}."<br/>"."<br/>";
 
-my $rcon_validation = validate_rcon();
-my $rcon_valid = (!defined $rcon_validation);
-if (!$rcon_valid) {
-	print ui_alert_box("<br/>". $rcon_validation . "<br/>" . $text{"index_features_disabled"}, "warn");
+if (!$rcon{"valid"}) {
+	alert_box($rcon{"msg"}{"type"}, $rcon{"msg"}{"content"});
 	print "<br/>";
 }
 print ui_table_row(
 	$text{"scheduler_ann"},
-	ui_radio("scheduler_announce", ($rcon_valid && $config{"scheduler_announce"} == 1) ? 1 : 0, [ [ 0, $text{"no"} ], [ 1, $text{"yes"} ] ], ($rcon_valid) ? 0 : 1)
+	ui_radio("scheduler_announce", ($rcon{"valid"} && $config{"scheduler_announce"} == 1) ? 1 : 0, [ [ 0, $text{"no"} ], [ 1, $text{"yes"} ] ], ($rcon{"valid"}) ? 0 : 1)
 );
 
 print ui_hidden_table_end("announce");

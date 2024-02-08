@@ -5,6 +5,8 @@
 require "./paldmin-lib.pl";
 require "./rcon-lib.pl";
 
+init_rcon();
+
 ReadParse();
 error_setup($text{"error"});
 my $steamid = %in{"steamid"};
