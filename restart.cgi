@@ -3,6 +3,8 @@
 
 require "./paldmin-lib.pl";
 
+init_service();
+
 ReadParse();
 error_setup($text{"restart_err"});
 my $err = restart_server();

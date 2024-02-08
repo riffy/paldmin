@@ -3,6 +3,7 @@
 # Start the PalServer daemon
 
 require "./paldmin-lib.pl";
+init_service();
 
 ReadParse();
 error_setup($text{"start_err"});
