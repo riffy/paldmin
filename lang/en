@@ -1,7 +1,5 @@
 index_title=Paldmin
 index_subtitle=Palworld Server Admin Interface v $1 
-index_epalworld=The PalServer program $1 was not found on your system. <br/><br/>Maybe PalServer is not installed, your <a href='$2'>module configuration</a> is incorrect, or the file has the wrong chmod flags.
-index_eservice=The PalServer daemon $1 was not found on your system or systemctl not found. <br/><br/>Maybe the daemon service is not registered or your <a href='$2'>module configuration</a> is incorrect.
 
 index_atboot=Start at boot?
 index_atbootdesc=Change this option to control whether the Palword Server is started at boot time or not.
@@ -15,24 +13,19 @@ index_wrcon_pwd=AdminPassword is not set.<br/>Adjust your World Settings or over
 index_wsave_dir=Could not find savegame directory $1 .<br/>Please start the server once manually to create a default save. 
 index_wsave_conf=Could not find savegame config $1 .<br/>Please start the server once manually to create a default save and config.
 
-index_features_disabled=Some features are disabled.
+index_service_info=Service Info
+service_missing_daemon=The PalServer daemon $1 was not found on your system or systemctl not found. <br/><br/>Maybe the daemon service is not registered or your <a href='$2'>module configuration</a> is incorrect.
+service_no_service=Service/Daemon Name not configured in <a href='$1'>module configuration</a>. No control available.
+index_service_upsince_title=Online Since
+index_service_upsince_ns=Not started yet
+basic_ram_usage=RAM Usage
+
+index_rcon_title=RCON Info
+basic_rcon_title=RCON State
+basic_players=Active Players
 
 index_broadcast=Broadcast Message
 index_broadcast_desc=(Whitespaces get replaced with underscores '_')
-
-index_rcon_title=Custom RCON Command
-index_rcon_command=Command
-index_rcon_params=Parameters
-index_rcon_params_desc=(Parameters are automatically wrapped in doublequotes '"')
-
-index_service_info=Service
-index_service_upsince_title=Online Since
-index_service_upsince_ns=Not started yet
-
-index_rcon_title=RCON
-basic_rcon_title=RCON State
-basic_players=Active Players
-basic_ram_usage=RAM Usage
 
 index_glop=Global Options
 glop_ws=World Settings
@@ -42,9 +35,6 @@ glop_playerlist=Active Player List
 glop_banlist=Banned Players
 glop_scheduler=Restart Scheduler
 glop_rcon=RCON Terminal
-
-index_service_control=Service Control
-index_i_no_service=Service/Daemon Name not configured in <a href='$1'>module configuration</a>. No control available
 
 index_start=Start Palworld Server
 index_startmsg=Click this button to start the PalServer.
@@ -107,8 +97,11 @@ scheduler_dcron=Scheduled restart for server disabled.
 scheduler_ucron=Scheduled restart times for server updated.
 scheduler_ncron=Scheduled restart for server left disabled.
 
-atboot_e=Error while trying to change boot runtime
+custom_heading=Custom RCON Command
+custom_info=Notes: <ul><li>Syntax is case sensitive.</li><li>Some commands require arguments to be wrapped in doublequotes ("").</li><li>Whitespaces need to be replaced with underscores (_).</li><br/>Example: Broadcast "Hello_World"
+custom_missing_proc=The Webmin Module dependency "proc" was not identified.
 
+atboot_e=Error while trying to change boot runtime
 
 rcon_no_command=No RCON command recognized to perform.
 rcon_command_failed=RCON command failed to execute: $1 <br/> Result: $2
@@ -127,6 +120,7 @@ send=Send
 error=Error
 warning=Warning
 success=Success
+output=Output
 
 online=Online
 offline=Offline
