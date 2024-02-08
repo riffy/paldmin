@@ -26,7 +26,7 @@ sub module_uninstall  {
 	}
 
 	# Delete config file
-	if (-r "$config{"paldmin_config"}") {
+	if (-r "$config{'paldmin_config'}") {
 		unlink_file($config{"paldmin_config"});
     }
 }
