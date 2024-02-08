@@ -3,5 +3,5 @@ paldmin_config=Full path to Paldmin config file,0
 pid_file=Full path to Paldmin PID file,3,None
 systemctl=Daemon Service (systemctl start ...),3,None
 rcon_dir=Full path to RCON directory,7
-rcon_overwrite_addr=Overwrite RCON Address (IP:PORT),3,From World Settings
-rcon_overwrite_pwd=Overwrite RCON Password (exclude doublequotes),3,From World Settings
+rcon_overwrite_addr=RCON Address (IP:PORT),3,From World Settings
+rcon_overwrite_pwd=RCON Password (exclude doublequotes),3,From World Settings
