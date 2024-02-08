@@ -27,7 +27,7 @@ For some functions to work properly, an RCON client is necessary, which the Pald
 For the rcon-cli, we use [this](https://github.com/gorcon/rcon-cli) one from gorcon.
 
 1. Open a SSH Terminal to your server
-2. Login as the same user that hosts the Palworld Server, if you followed the linked tutorial this would be `steam`.
+2. Login as the same user that hosts the Palworld Server, if you followed the linked tutorial this would be `steam` and switch directory to your home `cd ~`.
 3. Go to [releases](https://github.com/gorcon/rcon-cli/releases) and download a suitable linux release:
 	- `wget https://github.com/gorcon/rcon-cli/releases/download/v0.10.3/rcon-0.10.3-amd64_linux.tar.gz`
 	- Unpack tarball `tar -xvf rcon-0.10.3-amd64_linux.tar.gz`
@@ -47,6 +47,8 @@ If you chose a different installation path or your environment changes, you can 
 | Paldmin config file | Webmin Config file for later use | `/etc/paldmin.conf` |
 | Daemon Service | The daemon service which is controlled by the module via `start`, `stop`, `restart` | `palworld.service` |
 | RCON directory | Path to the directory where the `rcon` executable is located | |
+| RCON Address | If set, paldmin will force-enable rcon (ignoring world settings) using this address | `From World Settings`
+| RCON Password | If set, paldmin will force-use the value for rcon password (ignoring world settings) | `From World Settings`
 
 
 

@@ -6,6 +6,7 @@ A [Webmin](https://webmin.com/) module for easy configure and control of a Palwo
 * Basic Info
 * Edit PalWorldSettings.ini (or any other .ini file)
 * Full RCON Support (Kick / Ban Player, Broadcast, List Player, ...)
+	* With Terminal
 * Restart Scheduler with automated Announcements
 
 ![Screenshot of Paldmin](./docs/images/readme_01.PNG)
@@ -16,7 +17,6 @@ A [Webmin](https://webmin.com/) module for easy configure and control of a Palwo
 * Discord Bot Integration 
 * Restart Scheduler with RAM Usage
 * Set Backup Plan
-* Custom RCON command
 * List Player
 	* List / Download .sav File (hex GUID)
 * Savegame / SaveFile Editor
@@ -35,6 +35,10 @@ Please follow the [installation guide](./docs/install.md)
 ## Usage
 
 Please follow the [usage guide](./docs/usage.md)
+
+## Update Module
+
+Please follow the [update guide](./docs/update.md)
 
 ## FAQs
 
