@@ -33,6 +33,7 @@ For the rcon-cli, we use [this](https://github.com/gorcon/rcon-cli) one from gor
 	- Unpack tarball `tar -xvf rcon-0.10.3-amd64_linux.tar.gz`
 4. Now you should have a directory with an `rcon` executable inside a directory. Enter the directory into your [Module Configuration](#moduleconfig).
 5. Please check your [World Settings](./usage.md#world-settings) if `RCON` is enabled and an `AdminPassword` is set. The `RCONPort` doesn't need to be added to the firewall.
+6. Alternatively you can set overwrite values for the address and password of the rcon in the module configuration.
 
 ## <a name="moduleconfig"></a>Module Configuration
 
