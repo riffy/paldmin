@@ -10,6 +10,15 @@ init_config();
 
 # Globals
 our $module_config_url = "@{[&get_webprefix()]}/config.cgi?$module_name";
+our %service = (
+	"enabled" => 0,
+	"name" => undef,
+	"valid" => 0,
+	"msg" => {
+		"type" => undef,
+		"content" => undef
+	}
+);
 
 =head2 Validation
 
@@ -18,78 +27,48 @@ Returns errors
 
 =cut
 
-=head2 validate_config()
+=head3 init_service()
 
-Checks if the paldmin config is correct.
-Also validates the values of the paldmin config.
-
-Returns:
-	@[type, title, content]
-	or
-	empty list on success
-
+Initializes the global service var.
+Configured service in a hash:
+	enabled:
+		If service is enabled by the module config
+	name:
+		Name of the service to check
+	valid:
+		0 if unvalid, 1 if valid and service exists
+	msg:
+		type: Type for the message (info, warning, error, success,...)
+		content: Message for disabled/invalid, etc when parsing config
 =cut
 
-sub validate_config() {
-	my ($e, $sp) = get_script_validation();
-	if ($e > 0) {
-		return ('error', 'Module Config', text('index_epalworld',"<tt>$sp</tt>", "@{[&get_webprefix()]}/config.cgi?$module_name"))
+sub init_service {
+	# Check if enabled
+	if (!defined $config{"systemctl"} || length($config{"systemctl"}) <= 0) {
+		$service{"msg"}{"type"} = "info";
+		$service{"msg"}{"content"} = text("service_no_service", $module_config_url);
+		return;
+	}
+	$service{"enabled"} = 1;
+	$service{"name"} = $config{"systemctl"};
+
+	# Check if systemctl is valid
+	if (has_command("systemctl")) {
+		my $output = backquote_command("systemctl list-unit-files $service{'name'} 2>&1");
+		# Check if the output contains any unit files for the service
+		if ($output =~ /(\d+)\s+unit files listed/) {
+			my $num_unit_files = $1;
+			if ($num_unit_files > 0) {
+				# Success (service found)
+				$service{"valid"} = 1;
+			}
+		}
 	}
 
-	my $ectl = get_systemctl_validation();
-	if ($ectl > 0) {
-		return ('error', 'Module Config', text('index_eservice',"<tt>$config{'systemctl'}</tt>", "@{[&get_webprefix()]}/config.cgi?$module_name"))
+	if (!$service{"valid"}) {
+		$service{"msg"}{"type"} = "info";
+		$service{"msg"}{"content"} = text("service_missing_daemon", $service{"name"} ,$module_config_url);
 	}
-
-	return;
-}
-
-=head2 get_script_validation
-
-Checks if the configured palworld install directory is correct and the shell script exists
-and is executable.
-
-Returns:
-	@[
-		>0 if error, 0 on success
-		checked script path
-	]
-
-=cut
-
-sub get_script_validation() {
-	my $script_path = "$config{'palserver'}/PalServer.sh";
-	return ((!-x $script_path), $script_path)
-}
-
-=head2 get_systemctl_validation()
-
-Checks if the daemon service in the config is correctly configured
-and registered as systemctl service.
-Returns 0 on success or 1 on error / not found.
-
-=cut
-
-sub get_systemctl_validation() {
-	my $systemctlcmd = has_command("systemctl");
-	if (!defined $systemctlcmd) {
-		return 1;
-	}
-	my $output = backquote_command("systemctl list-unit-files $config{'systemctl'} 2>&1");
-	# Check if the output contains any unit files for the service
-    if ($output =~ /(\d+)\s+unit files listed/) {
-        my $num_unit_files = $1;
-        if ($num_unit_files > 0) {
-            # Success (service found)
-            return 0;
-        } else {
-            # Error (service not found)
-            return 1;
-        }
-    } else {
-        # Error (unexpected output)
-        return 1;
-    }
 }
 
 =head2 validate_savegame()
@@ -99,6 +78,7 @@ Returns:
 	@[type, title, content]
 	or
 	empty list on success
+
 
 =cut
 
@@ -161,8 +141,11 @@ Returns: {
 
 sub get_service_status {
 	my %rv;
-    my $systemctlcmd = has_command("systemctl");
-    my $res = backquote_command("$systemctlcmd status $config{'systemctl'}");
+	if (!$service{"valid"}) {
+		return %rv;
+	}
+
+    my $res = backquote_command("systemctl status ".$service{"name"});
 
 	# Extract information from the command output
 	if ($res =~ /Loaded: .+; (\w+); preset: \w+/) {
@@ -192,8 +175,10 @@ Returns the service state or undef if no systemctl registered
 =cut
 
 sub get_server_state {
-    my $systemctlcmd = has_command("systemctl");
-    return defined $systemctlcmd ? backquote_command("$systemctlcmd is-active $config{'systemctl'}") =~ s/\n//r : undef;
+	if (!$service{"valid"}) {
+		return undef;
+	}
+	return (backquote_command("systemctl is-active ".$service{"name"}) =~ s/\n//r);
 }
 
 =head2 is_server_running()
@@ -219,13 +204,12 @@ Starts the server by the service
 =cut
 
 sub start_server() {
-	if ($config{'systemctl'}) {
-		my $out = backquote_logged("systemctl start $config{'systemctl'} 2>&1 </dev/null");
-		if ($?) { 
-			return "<pre>$out</pre>"; 
-		}
-	} else {
+	if (!$service{"valid"}) {
 		return text('missing_cmd', "@{[&get_webprefix()]}/config.cgi?$module_name");
+	}
+	my $out = backquote_logged("systemctl start $config{'systemctl'} 2>&1 </dev/null");
+	if ($?) { 
+		return "<pre>$out</pre>"; 
 	}
 }
 
@@ -236,15 +220,13 @@ Stop the server by the service
 =cut
 
 sub stop_server {
-	if ($config{'systemctl'}) {
-		my $out = backquote_logged("systemctl stop $config{'systemctl'} 2>&1 </dev/null");
-		if ($?) { 
-			return "<pre>$out</pre>"; 
-		}
-	} else {
-		return text('missing_cmd', "@{[&get_webprefix()]}/config.cgi?$module_name");
+	if (!$service{"valid"}) {
+		return text('missing_cmd', $module_config_url);
 	}
-	return undef;
+	my $out = backquote_logged("systemctl stop $config{'systemctl'} 2>&1 </dev/null");
+	if ($?) { 
+		return "<pre>$out</pre>"; 
+	}
 }
 
 =head2 restart_server(force_restart)
