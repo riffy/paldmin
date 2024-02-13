@@ -39,10 +39,10 @@ jobs:
    
       - name: Create Artifact
         run: |
-          tar -zcvf "paldmin-${{ github.event.inputs.release_version }}.tar.gz" ./paldmin
+          tar -zcvf "paldmin-${{ github.event.inputs.release_version }}.wbm.gz" ./paldmin
 
       - name: Upload Release Artifact
         uses: actions/upload-artifact@v4
         with:
           name: release-artifact
-          path: paldmin-${{ github.event.inputs.release_version }}.tar.gz
+          path: paldmin-${{ github.event.inputs.release_version }}.wbm.gz

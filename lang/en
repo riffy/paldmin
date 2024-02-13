@@ -107,6 +107,11 @@ rcon_no_command=No RCON command recognized to perform.
 rcon_command_failed=RCON command failed to execute: $1 <br/> Result: $2
 rcon_config_invalid=Internal RCON configuration missing. Cant issue a command.
 
+updater_new_title=Paldmin Update Available
+updater_new_etitle=Paldmin Update Error
+updater_new_desc=Paldmin Version $1 is available. <br/>You can check out a changelog <a href='$2' target='_blank'>here</a>.</br>Please consult the <a href='$3' target='_blank'>manual</a> to update your paldmin version.
+updater_new_edesc=Error while trying to check for update: $1
+
 ok=Okay
 nok=Not Okay
 save=Save
