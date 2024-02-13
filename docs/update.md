@@ -1,9 +1,12 @@
 # Update
 
-> [!IMPORTANT]
-> Currently the module doesn't support _automatic update_ but is planned for future releases. _Manual update_ will delete your _module configuration_ and the _restart schedule_ has to be set again.
+## Installing update
+To update Paldmin, just install the newer version over the already existing one.
 
-## Manual Update
+## Reinstall
+
+> [!IMPORTANT]
+> Updating via a reinstall your _module configuration_ and the _restart schedule_ has to be set again.
 
 Manual update involves deleting the old Paldmin module and installing a new version.
 
