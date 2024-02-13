@@ -5,10 +5,6 @@
 require "./paldmin-lib.pl";
 require "./paldmin-ui-lib.pl";
 
-my $module_name = get_module_name();
-my $module_info = get_module_info($module_name);
-my $module_version = $module_info{"version"};
-
 ui_print_header($text{"glop_ws"}, $text{"index_title"}, "", "intro", 1, 1);
 alert_box_with_collapsible(
 	"info",
@@ -32,7 +28,7 @@ if (!%world_settings || !keys %world_settings) {
 	# Sort keys alphabetically
 	my @sorted_keys = sort keys %world_settings;
 	foreach my $key (@sorted_keys) {
-		# RCONenabled doesn"t start with lowercase b
+		# RCONenabled does't start with lowercase b
 		if ($key =~ /^b/ || $key eq "RCONEnabled") {
 			print ui_table_row($key, ui_yesno_radio($key, $world_settings{$key}, "True", "False"));
 		} else {
