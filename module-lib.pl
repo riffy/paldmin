@@ -1,10 +1,11 @@
 #!/usr/bin/perl
-# version-lib.cgi
-# Library for versioning / updating
+# module-lib.cgi
+# Library for version checking module
 
 do "paldmin-lib.pl";
 
-our $repo = "https://github.com/riffy/paldmin";
+our $github = "https://github.com";
+our $repo = "riffy/paldmin";
 
 =head2 get_higher_version
 
@@ -75,7 +76,7 @@ sub get_latest_version {
 	);
 	my $json;
 	my $response = http_download(
-		"api.github.com", "443", "/repos/riffy/paldmin/releases/latest", 
+		"api.github.com", "443", "/repos/".$repo."/releases/latest", 
 		\$json, \$rv{"error"}, undef,
 		1, 
 		undef, undef,

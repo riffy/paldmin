@@ -5,7 +5,7 @@
 require "./paldmin-ui-lib.pl";
 require "./paldmin-lib.pl";
 require "./rcon-lib.pl";
-require "./version-lib.pl";
+require "./module-lib.pl";
 
 init_service();
 init_rcon();
