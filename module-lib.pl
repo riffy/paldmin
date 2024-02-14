@@ -60,8 +60,39 @@ sub compare_version_strings {
 
 =head2 get_latest_version
 
+Checks a temp file:
+	If it exists and last update is < 5 minutes in delta, returns the temp version.
+	Else returns the remote version and writes to temp file.
+Returns:
+	[
+		version -> Version string with MAJOR.MINOR.PATCH
+		error -> Error message, set on error, else undef
+		last_update -> Timestamp of last update
+	]
+=cut
+
+sub get_latest_version {
+	my $file = $module_config_directory."/update_check";
+	my %rv;
+	read_file_cached($file, \%rv);
+	# Check if a version and last_update exists
+	if (!defined $rv{"version"} || !defined $rv{"last_update"}) {
+		return get_remote_version();
+	} elsif ((time() - $rv{"last_update"}) > 300) {
+		# Check if last update is older than 5 minutes
+		return get_remote_version();
+	} else {
+		# Use values from temporary file
+		delete $rv{"error"};
+		return %rv;
+	}
+}
+
+=head2 get_remote_version
+
 Retrieves the latest version from github releases.
-Returns a hash with: 
+On success, writes the result to a temp file
+Returns:
 	[
 		version -> Version string with MAJOR.MINOR.PATCH
 		error -> Error message, set on error, else undef
@@ -69,10 +100,12 @@ Returns a hash with:
 
 =cut
 
-sub get_latest_version {
+sub get_remote_version {
+	my $file = $module_config_directory."/update_check";
 	my %rv = (
 		"version" => undef,
-		"error" => undef
+		"error" => undef,
+		"last_update" => undef
 	);
 	my $json;
 	my $response = http_download(
@@ -85,10 +118,12 @@ sub get_latest_version {
 	if (defined $rv{"error"}) {
 		return %rv;
 	} elsif ($json =~ /tag_name":"(.*?)"/) {
+		delete $rv{"error"};
 		$rv{"version"} = $1;
+		$rv{"last_update"} = time();
+		write_file($file, \%rv);
 	}
 	return %rv;
-	
 }
 
 =head2 parse_version_string(version_string)
