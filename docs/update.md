@@ -1,7 +1,7 @@
 # Update
 
 ## Installing update
-To update Paldmin, just install the newer version over the already existing one, the same as you would install the module following the [install guide](./install.md#basic-installation).
+To update Paldmin, just install the newer version over the already existing one, the same as you would install the module following the [install guide](./install.md#basic-installation). This should keep any configured _module configuration_ and _restart schedule_.
 
 ## Reinstall
 
