@@ -5,3 +5,4 @@ systemctl=palworld.service
 rcon_dir=
 rcon_overwrite_addr=
 rcon_overwrite_pwd=
+update_check=1

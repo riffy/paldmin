@@ -10,8 +10,7 @@ require "./module-lib.pl";
 init_service();
 init_rcon();
 
-my $module_name = get_module_name();
-my $module_info = get_module_info($module_name);
+my $module_info = get_module_info(get_module_name());
 my $module_version = $module_info{"version"};
 
 ui_print_header(text("index_subtitle", $module_version), $text{"index_title"}, "", "intro", 1, 1);
@@ -19,7 +18,17 @@ ui_print_header(text("index_subtitle", $module_version), $text{"index_title"}, "
 if ($config{"update_check"}) {
 	my %resp = get_higher_version();
 	if (defined $resp{"version"}) {
-		collapsible_box("info", $text{"updater_new_title"}, text("updater_new_desc", $resp{"version"}, $repo."/releases", "https://github.com/riffy/paldmin/blob/v1.1.1/docs/update.md"));
+		collapsible_box(
+			"info",
+			$text{"updater_new_title"},
+			text(
+				"updater_new_desc",
+				$resp{"version"},
+				"$github/$repo/blob/main/docs/update.md",
+				"$github/$repo/releases",
+				$module_config_url
+			)
+		);
 		print "<br/>";
 	} elsif (defined $resp{"error"}) {
 		collapsible_box("error", $text{"updater_new_etitle"}, text("updater_new_edesc", $resp{"error"}));

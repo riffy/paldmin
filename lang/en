@@ -109,8 +109,9 @@ rcon_config_invalid=Internal RCON configuration missing. Cant issue a command.
 
 updater_new_title=Paldmin Update Available
 updater_new_etitle=Paldmin Update Error
-updater_new_desc=Paldmin Version $1 is available. <br/>You can check out a changelog <a href='$2' target='_blank'>here</a>.</br>Please consult the <a href='$3' target='_blank'>manual</a> to update your paldmin version.
+updater_new_desc=Paldmin Version $1 is available. <br/>A guide to update your version can be found <a href='$2' target='_blank'>here</a>.<br/>You can check out the release <a href='$3' target='_blank'>here</a> or disable update checks in your <a href='$4'>module configuration</a>.
 updater_new_edesc=Error while trying to check for update: $1
+updater_preview_title=Paldmin Update
 
 ok=Okay
 nok=Not Okay

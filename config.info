@@ -5,3 +5,4 @@ systemctl=Daemon Service (systemctl start ...),3,None
 rcon_dir=Full path to RCON directory,7
 rcon_overwrite_addr=RCON Address (IP:PORT),3,From World Settings
 rcon_overwrite_pwd=RCON Password (exclude doublequotes),3,From World Settings
+update_check=Check for updates,1,1-Yes,0-No
