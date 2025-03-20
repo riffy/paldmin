@@ -17,8 +17,9 @@ if ($esd > 0) {
 	&indexof($in{"config"}, @files) >= 0 ||
 		&error($text{"glop_config_efile"});
 	
-	# Full path to config file
-	my $file = "$dir/$in{"config"}";
+	# Build full path to config file
+	my $temp = $in{"config"};
+	my $file = "$dir/$temp";
 
 	$in{"data"} =~ s/\r//g;
 	open_lock_tempfile(CONFIG, ">$file");
