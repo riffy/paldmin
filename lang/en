@@ -1,20 +1,23 @@
 index_title=Paldmin
 index_subtitle=Palworld Server Admin Interface v $1 
 
+validate_savegame_missing=Palworld Savegame Missing
+validate_savegameconf_missing=Palworld Savegame Config Missing
+
 index_atboot=Start at boot?
 index_atbootdesc=Change this option to control whether the Palword Server is started at boot time or not.
 
 index_wrcon_conf=RCON Directory is not configured in your <a href='$1'>module configuration</a>.
 index_wrcon_dir=Given RCON directory $1 in your <a href='$2'>module configuration</a> is invalid.
 index_wrcon_missing_exec=RCON $1 is not an executable. Please check your <a href='$2'>module configuration</a> and the file chmod.
-index_ircon_disabled=RCON is currently disabled and some features are not available.<br/>Adjust your World Settings or overwrite settings via <a href='$1'>module configuration</a>.
-index_wrcon_pwd=AdminPassword is not set.<br/>Adjust your World Settings or overwrite settings via <a href='$1'>module configuration</a>.
+index_ircon_disabled=RCON is currently disabled and some features are not available.<br>Adjust your World Settings or overwrite settings via <a href='$1'>module configuration</a>.
+index_wrcon_pwd=AdminPassword is not set.<br>Adjust your World Settings or overwrite settings via <a href='$1'>module configuration</a>.
 
-index_wsave_dir=Could not find savegame directory $1 .<br/>Please start the server once manually to create a default save. 
-index_wsave_conf=Could not find savegame config $1 .<br/>Please start the server once manually to create a default save and config.
+index_wsave_dir=Could not find savegame directory $1.<br>Please start the server once manually to create a default save. 
+index_wsave_conf=Could not find savegame config $1.<br>Please start the server once manually to create a default save and config.
 
 index_service_info=Service Info
-service_missing_daemon=The PalServer daemon $1 was not found on your system or systemctl not found. <br/><br/>Maybe the daemon service is not registered or your <a href='$2'>module configuration</a> is incorrect.
+service_missing_daemon=The PalServer daemon $1 or systemctl was not found on your system.<br><br>Maybe the daemon service is not registered or your <a href='$2'>module configuration</a> is incorrect.
 service_no_service=Service/Daemon Name not configured in <a href='$1'>module configuration</a>. No control available.
 index_service_upsince_title=Online Since
 index_service_upsince_ns=Not started yet
@@ -24,8 +27,8 @@ index_rcon_title=RCON Info
 basic_rcon_title=RCON State
 basic_players=Active Players
 
-index_broadcast=Broadcast Message
-index_broadcast_desc=(Whitespaces get replaced with underscores '_')
+index_broadcast=Broadcast (global) Message
+index_broadcast_desc=(Whitespaces get replaced with underscores ('_'))
 
 index_glop=Global Options
 glop_ws=World Settings
@@ -53,14 +56,14 @@ glop_ws_e=World Settings Error
 glop_ws_eread=Could not read existing world settings
 glop_ws_header=World Settings
 glop_ws_info=Beware of Syntax!
-glop_ws_info_desc=Stick to the following syntax rules: <ul><li>NEVER use commas (,) or equalsigns (=) ANYWHERE. (no, not even in the server name)</li><li>Always use point (.) for decimals.</li><li>Use double quotes "" when they are already present.</li></ul><br>
+glop_ws_info_desc=Stick to the following syntax rules: <ul><li>NEVER use commas (,) or equalsigns (=) ANYWHERE. (no, not even in the server name)</li><li>Always use point (.) for decimals.</li><li>Use double quotes ("") when they are already present.</li></ul><br>
 change_restart_required=<strong>Changes are only applied AFTER a restart</bold>
 glop_ws_reset_desc=You can reset the world settings back to default.
 
 glop_ws_esave_title=Error while saving config
-glop_ws_esave_del=Failed deleting old config file. <br/> $1
-glop_ws_esave_open=Failed creating/opening new config file. <br/> $1
-glop_ws_reset_succ=World Settings $1 successfully reset to default. <br/>
+glop_ws_esave_del=Failed deleting old config file.<br>$1
+glop_ws_esave_open=Failed creating/opening new config file.<br>$1
+glop_ws_reset_succ=World Settings $1 successfully reset to default.<br>
 
 glop_config_txt=Files from $1
 glop_config_file=Edit Config File
@@ -78,17 +81,17 @@ banlist_eadd_duplicate=SteamID already banned
 banlist_eremove_nosteamid=No SteamIDs selected
 
 scheduler_text=This form allows you to schedule a restart for the Palworld Server.
-scheduler_ecron_missing=Cron not found on the system, or current user is not allowed to schedule cron jobs.<br/>Please install cron or allow access.
-scheduler_ecron_exe=The cron script at $1 is incorrect, or the file has the wrong chmod flags.<br/>File requires executable (+x) flag.
+scheduler_ecron_missing=Cron not found on the system, or current user is not allowed to schedule cron jobs.<br>Please install cron or allow access.
+scheduler_ecron_exe=The cron script at $1 is incorrect, or the file has the wrong chmod flags.<br>File requires executable (+x) flag.
 scheduler_cycle=Restart Cycle
 scheduler_cyc=Restart Cycle enabled?
-scheduler_cyc1=Yes, every ...
+scheduler_cyc1=Yes, every...
 scheduler_schedule=Restart Schedule
 scheduler_sched=Scheduled restart enabled?
-scheduler_sched1=Yes, at times chosen below ..
+scheduler_sched1=Yes, at times chosen below...
 scheduler_announce=Restart Announcement
 scheduler_announce_note=Note: If activated, an announcement for restart is send via RCON Broadcast 15,10,5 and 1 minute before restart. So the restart is delayed by 15 minutes in comparison to the entered time.
-scheduler_ann=Announce restart ?
+scheduler_ann=Announce restart?
 scheduler_ann_result=Delay restart and announce: $1
 scheduler_upd=Scheduler Updated
 scheduler_err=Scheduled Restart failed
@@ -98,13 +101,13 @@ scheduler_ucron=Scheduled restart times for server updated.
 scheduler_ncron=Scheduled restart for server left disabled.
 
 custom_heading=Custom RCON Command
-custom_info=Notes: <ul><li>Syntax is case sensitive.</li><li>Some commands require arguments to be wrapped in doublequotes ("").</li><li>Whitespaces need to be replaced with underscores (_).</li><br/>Example: Broadcast "Hello_World"
+custom_info=Notes: <ul><li>Syntax is case sensitive.</li><li>Some commands require arguments to be wrapped in doublequotes ("").</li><li>Whitespaces need to be replaced with underscores (_).</li><br>Example: Broadcast "Hello_World"
 custom_missing_proc=The Webmin Module dependency "proc" was not identified.
 
 atboot_e=Error while trying to change boot runtime
 
 rcon_no_command=No RCON command recognized to perform.
-rcon_command_failed=RCON command failed to execute: $1 <br/> Result: $2
+rcon_command_failed=RCON command failed to execute: $1<br>Result: $2
 rcon_config_invalid=Internal RCON configuration missing. Cant issue a command.
 
 ok=Okay
