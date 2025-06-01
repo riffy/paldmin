@@ -85,11 +85,11 @@ Returns:
 sub validate_savegame() {
 	my ($e, $sd) = get_savedir_validation();
 	if ($e > 0) {
-		return ('warning', 'Palworld Savegame Missing', text('index_wsave_dir',"<tt>$sd</tt>"))
+		return ('warning', text("validate_savegame_missing"), text('index_wsave_dir',"<tt>$sd</tt>"))
 	}
 	($e, $sd) = get_saveconfig_validation();
 	if ($e > 0) {
-		return ('warning', 'Palworld Savegame Config Missing', text('index_wsave_conf',"<tt>$sd</tt>"))
+		return ('warning', text("validate_savegameconf_missing"), text('index_wsave_conf',"<tt>$sd</tt>"))
 	}
 	return;
 }
