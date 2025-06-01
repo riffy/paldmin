@@ -10,14 +10,14 @@ index_atbootdesc=Ändere diese Option, um festzulegen, ob der Palword-Server bei
 index_wrcon_conf=Das RCON-Verzeichnis ist in deiner <a href='$1'>Modulkonfiguration</a> nicht eingerichtet.
 index_wrcon_dir=Das RCON-Verzeichnis $1 in deiner <a href='$2'>Modulkonfiguration</a> ist fehlerhaft.
 index_wrcon_missing_exec=RCON $1 ist keine ausführbare Datei. Schau mal in deiner <a href='$2'>Modulkonfiguration</a> und in der Datei chmod nach.
-index_ircon_disabled=RCON ist gerade deaktiviert und einige Funktionen sind nicht verfügbar.<br/>Passe deine Welteinstellungen an oder überschreibe Einstellungen über die <a href='$1'>Modulkonfiguration</a>.
-index_wrcon_pwd=AdminPassword ist nicht festgelegt. <br/>Passe deine Welteinstellungen an oder überschreibe die Einstellungen über die <a href='$1'>Modulkonfiguration</a>.
+index_ircon_disabled=RCON ist gerade deaktiviert und einige Funktionen sind nicht verfügbar.<br>Passe deine Welteinstellungen an oder überschreibe Einstellungen über die <a href='$1'>Modulkonfiguration</a>.
+index_wrcon_pwd=AdminPassword ist nicht festgelegt.<br>Passe deine Welteinstellungen an oder überschreibe die Einstellungen über die <a href='$1'>Modulkonfiguration</a>.
 
-index_wsave_dir=Das Savegame-Verzeichnis $1 für konnte nicht gefunden werden.<br/>Starte den Server einmal manuell, um einen Standardspeicherstand zu erstellen.
-index_wsave_conf=Die Konfiguration für das Savegame-Verzeichnis $1 konnte nicht gefunden werden.<br/>Starte den Server einmal manuell, um eine Standard-Speicher- und Konfigurationsdatei zu erstellen.
+index_wsave_dir=Das Savegame-Verzeichnis $1 für konnte nicht gefunden werden.<br>Starte den Server einmal manuell, um einen Standardspeicherstand zu erstellen.
+index_wsave_conf=Die Konfiguration für das Savegame-Verzeichnis $1 konnte nicht gefunden werden.<br>Starte den Server einmal manuell, um eine Standard-Speicher- und Konfigurationsdatei zu erstellen.
 
 index_service_info=Service Info
-service_missing_daemon=Der PalServer-Daemon $1 oder systemctl wurde auf deinem System nicht gefunden.<br/><br/>Vielleicht ist der Daemon-Dienst nicht registriert oder deine <a href='$2'>Modulkonfiguration</a> stimmt nicht.
+service_missing_daemon=Der PalServer-Daemon $1 oder systemctl wurde auf deinem System nicht gefunden.<br><br>Vielleicht ist der Daemon-Dienst nicht registriert oder deine <a href='$2'>Modulkonfiguration</a> stimmt nicht.
 service_no_service=Dienst-/Daemon-Name nicht in der <a href='$1'>Modulkonfiguration</a> eingerichtet.. Keine Steuerung verfügbar.
 index_service_upsince_title=Online seit
 index_service_upsince_ns=Noch nicht gestartet
@@ -27,8 +27,8 @@ index_rcon_title=RCON Info
 basic_rcon_title=RCON State
 basic_players=Aktive Spieler
 
-index_broadcast=Broadcast Message
-index_broadcast_desc=(Whitespaces get replaced with underscores '_')
+index_broadcast=Broadcast (globale) Nachricht
+index_broadcast_desc=(Leerzeichen werden durch Unterstriche ('_') ersetzt.)
 
 index_glop=Globale Optionen
 glop_ws=Welt-Einstellungen
@@ -56,14 +56,14 @@ glop_ws_e=Fehler bei den Welteinstellungen
 glop_ws_eread=Die vorhandenen Welteinstellungen konnten nicht gelesen werden
 glop_ws_header=Welteinstellungen
 glop_ws_info=Achtung bei der Syntax!
-glop_ws_info_desc=Halte dich an die folgenden Syntaxregeln: <ul><li>Verwende NIEMALS Kommas (,) oder Gleichheitszeichen (=) an IRGENDEINER Stelle. (Nein, auch nicht im Servernamen.)</li><li>Verwende für Dezimalstellen immer einen Punkt (.).</li><li>Verwende doppelte Anführungszeichen "", wenn die schon da sind.</li></ul><br>
+glop_ws_info_desc=Halte dich an die folgenden Syntaxregeln: <ul><li>Verwende NIEMALS Kommas (,) oder Gleichheitszeichen (=) an IRGENDEINER Stelle. (Nein, auch nicht im Servernamen.)</li><li>Verwende für Dezimalstellen immer einen Punkt (.).</li><li>Verwende doppelte Anführungszeichen (""), wenn die schon da sind.</li></ul><br>
 change_restart_required=<strong>Änderungen werden erst nach einem Neustart übernommen</bold>
 glop_ws_reset_desc=Du kannst die Welteinstellungen auf die Standardwerte zurücksetzen.
 
 glop_ws_esave_title=Fehler beim Speichern der Konfiguration
-glop_ws_esave_del=Löschen der alten Konfigurationsdatei fehlgeschlagen. <br/> $1
-glop_ws_esave_open=Erstellen/Öffnen der neuen Konfigurationsdatei fehlgeschlagen. <br/> $1
-glop_ws_reset_succ=Weltweite Einstellungen $1 erfolgreich auf Standardwerte zurückgesetzt. <br/>
+glop_ws_esave_del=Löschen der alten Konfigurationsdatei fehlgeschlagen.<br>$1
+glop_ws_esave_open=Erstellen/Öffnen der neuen Konfigurationsdatei fehlgeschlagen.<br>$1
+glop_ws_reset_succ=Weltweite Einstellungen $1 erfolgreich auf Standardwerte zurückgesetzt.<br>
 
 glop_config_txt=Dateien von $1
 glop_config_file=Konfigurationsdatei bearbeiten
@@ -101,13 +101,13 @@ scheduler_ucron=Geplante Neustartzeiten für Server aktualisiert.
 scheduler_ncron=Geplanter Neustart für Server bleibt deaktiviert.
 
 custom_heading=Benutzerdefinierter RCON-Befehl
-custom_info=Hinweise: <ul><li>Bei der Syntax musst du auf Groß- und Kleinschreibung achten. </li><li>Bei manchen Befehlen musst du die Argumente in doppelte Anführungszeichen ("") setzen. </li><li>Leerzeichen musst du durch Unterstriche (_) ersetzen. </li><br/>Beispiel: Broadcast "Hello_World"
+custom_info=Hinweise: <ul><li>Bei der Syntax musst du auf Groß- und Kleinschreibung achten.</li><li>Bei manchen Befehlen musst du die Argumente in doppelte Anführungszeichen ("") setzen.</li><li>Leerzeichen musst du durch Unterstriche (_) ersetzen.</li><br>Beispiel: Broadcast "Hello_World"
 custom_missing_proc=Die Webmin-Modulabhängigkeit "proc" wurde nicht gefunden.
 
 atboot_e=Fehler beim Versuch, die Boot-Laufzeit zu ändern
 
 rcon_no_command=Es wurde kein RCON-Befehl zum Ausführen erkannt.
-rcon_command_failed=RCON-Befehl konnte nicht ausgeführt werden: $1 <br/> Ergebnis: $2
+rcon_command_failed=RCON-Befehl konnte nicht ausgeführt werden: $1<br>Ergebnis: $2
 rcon_config_invalid=Interne RCON-Konfiguration fehlt. Befehl kann nicht ausgegeben werden.
 
 ok=Okay
